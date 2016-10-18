@@ -23,40 +23,65 @@ class Form
         foreach ( $fields_object as $field ) {
             $this->set_field( $field );
 
-            $input = $field[ 'input' ];
-            // Create abel
-            $this->label();
-            // Create field
-            switch ( $input ) {
-                // Text input
-                case "text":
-                    $this->text_input();
-                    break;
-                // Email input
-                case "email":
-                    $this->email_input();
-                    break;
-                case "radio":
-                    $this->radio_group();
-                    break;
-                case "select":
+            // Establish input type
+            $this->input_type();
 
-                    break;
-                case "button":
-                    $this->button();
-                    break;
-                case "submit":
-                    $this->submit();
-                    break;
-                case "password":
-                    $this->password_input();
-                    break;
-                    break;
-                default:
-                    break;
-            }
+            // Create label
+            $this->label();
+
 
             $this->set_html( $this->get_html() . "<br />" );
+        }
+    }
+
+    // Input type
+    private function input_type() {
+        $field = $this->get_field();
+        $input = $field[ 'input' ];
+
+        // Create field
+        switch ( $input ) {
+            // Text input
+            case "text":
+                $this->text_input();
+                break;
+            // Email input
+            case "email":
+                $this->email_input();
+                break;
+            case "radio":
+                $this->radio_group();
+                break;
+            case "select":
+
+                break;
+            case "button":
+                // If type of input is set
+                If ( isset( $field[ 'type' ] ) ) {
+                    switch ( $field[ 'type' ] ) {
+                        // Submit button
+                        case "submit":
+                            $this->submit_button();
+                            break;
+                        // Default button
+                        default:
+                            $this->button();
+                            break;
+                    }
+                    // If type of input is not set
+                } else {
+                    $this->button();
+                }
+                break;
+            case "submit":
+                $this->submit();
+                break;
+            case "password":
+                $this->password_input();
+                break;
+                break;
+            default:
+                break;
         }
     }
 
@@ -159,11 +184,24 @@ class Form
 
     // Submit button
     private function submit_button() {
-        // Set input name
-        // Set input id. IF not set then set to name
-        $id = !isset( $field[ 'id' ] ) ? $field[ 'name' ] : $field[ 'id' ];
-        $html = '<input type="submit" />';
-        $this->update_html( $html );
+        $field = $this->get_field();
+
+        $type = isset( $field[ 'type' ] ) ? $field[ 'type' ] : null;
+
+        // Html
+        $this->update_html( '<input type="submit"' );
+
+        $this->field_type();
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->update_html( '>' );
+
+        $this->field_text();
+
+        $this->update_html( '</submit>' );
     }
 
     private function field_type() {
