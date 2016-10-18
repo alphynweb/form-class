@@ -53,7 +53,7 @@ class Form
                 $this->radio_group();
                 break;
             case "select":
-
+                $this->select_dropdown();
                 break;
             case "button":
                 // If type of input is set
@@ -180,6 +180,22 @@ class Form
     // Radio group 
     private function radio_group() {
         
+    }
+
+    private function select_dropdown() {
+        $field = $this->get_field();
+
+        // Html
+        $this->update_html( '<select>' );
+
+        // Get options
+        $options = $field[ 'options' ];
+
+        foreach ( $options as $key => $value ) {
+            $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+        }
+
+        $this->update_html( '</select>' );
     }
 
     // Submit button

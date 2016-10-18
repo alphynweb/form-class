@@ -17,7 +17,7 @@
                 "name" => "text_field_one",
                 "id" => "textFieldOne",
                 "value" => "Text box one value",
-                "label" => array(
+                "label" => array (
                     "text" => "label text"
                 ),
                 "placeholder" => "Text box placeholder"
@@ -41,6 +41,14 @@
                 "input" => "button",
                 "type" => "submit",
                 "value" => "submit button value"
+            ),
+            array (
+                "input" => "select",
+                "options" => array (
+                    "Option one text" => "1",
+                    "Option two text" => "2",
+                    "Option three text" => "Value for option three"
+                )
             )
                 // Text input three
 //            array (
