@@ -80,8 +80,8 @@
                         "checked" => false,
                         "disabled" => false
                     ),
-                    "three",
-                    "four",
+                    "three" => array(),
+                    "four" => array(),
                     "five" => array (
                         "checked" => true,
                         "disabled" => false

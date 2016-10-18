@@ -179,7 +179,24 @@ class Form
 
     // Radio group 
     private function radio_group() {
-        
+        $field = $this->get_field();
+
+        $buttons = isset( $field[ 'buttons' ] ) ? $field[ 'buttons' ] : null;
+
+        // If no buttons stated then return without rendering anything
+        if ( !$buttons ) {
+            return false;
+        }
+
+        foreach ( $buttons as $button ) {
+            $this->update_html( '<input type="radio"' );
+
+            $this->field_name();
+            $this->field_checked( $button );
+            $this->field_disabled( $button );
+
+            $this->update_html( ' />' );
+        }
     }
 
     private function select_dropdown() {
@@ -307,6 +324,22 @@ class Form
         if ( !empty( $field_for ) ) {
             $html = ' for="' . $field_for . '"';
             $this->update_html( $html );
+        }
+    }
+
+    private function field_checked( $field ) {
+        $checked = isset( $field[ 'checked' ] ) ? $field[ 'checked' ] : false;
+
+        if ( $checked ) {
+            $this->update_html( ' checked="checked"' );
+        }
+    }
+
+    private function field_disabled( $field ) {
+        $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
+
+        if ( $disabled ) {
+            $this->update_html( ' disabled="disabled"' );
         }
     }
 
