@@ -49,6 +49,44 @@
                     "Option two text" => "2",
                     "Option three text" => "Value for option three"
                 )
+            ),
+            // Radio button group
+            // Name = name of radio button group
+            // Buttons = array of buttons. Each button has value, checked, 
+            // Example -
+            // array(
+            // "input" => "radio",
+            // "name" => "Name of radio button group",
+            // "buttons" => array (
+            //      "Value one" => array (
+            //                  "checked" => true,
+            //                  "disabled" => true
+            //                    ),
+            //      "Value two" => array (
+            //                  "checked" => false,
+            //                  "disabled" => false
+            //                    )
+            //              )
+            // )
+            array (
+                "input" => "radio",
+                "name" => "radio button group",
+                "buttons" => array (
+                    "one" => array (
+                        "checked" => true,
+                        "disabled" => true
+                    ),
+                    "two" => array (
+                        "checked" => false,
+                        "disabled" => false
+                    ),
+                    "three" => array(),
+                    "four" => array(),
+                    "five" => array (
+                        "checked" => true,
+                        "disabled" => false
+                    )
+                )
             )
                 // Text input three
 //            array (
