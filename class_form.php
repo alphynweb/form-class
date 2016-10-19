@@ -34,6 +34,11 @@ class Form
         }
     }
 
+    // Render form
+    public function renderForm() {
+        echo $this->get_html();
+    }
+    
     // Input type
     private function input_type() {
         $field = $this->get_field();

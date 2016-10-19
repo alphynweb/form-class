@@ -108,8 +108,7 @@
         );
 
         $form = new Form( $fields );
-        $html = $form->get_html();
-        echo $html;
+        $form->renderForm();
         ?>
     </body>
 </html>
