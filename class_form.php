@@ -23,12 +23,11 @@ class Form
         foreach ( $fields_object as $field ) {
             $this->set_field( $field );
 
-            // Establish input type
-            $this->input_type();
-
             // Create label
             $this->label();
-
+            
+            // Establish input type
+            $this->input_type();
 
             $this->set_html( $this->get_html() . "<br />" );
         }
@@ -38,7 +37,7 @@ class Form
     public function renderForm() {
         echo $this->get_html();
     }
-    
+
     // Input type
     private function input_type() {
         $field = $this->get_field();
@@ -92,30 +91,41 @@ class Form
 
     // Label
     private function label() {
-//        $field = $this->get_field();
-//
-//        // If label value is set to false then return
-//        if ( isset( $field[ 'label' ] ) && $field[ 'label' ] === false ) {
-//            return false;
-//        }
+        // Label will not show if :
+        // No label text
+        // label = false
+        // Label "for" will show if the labelled element has an id
+
+        $field = $this->get_field();
+
+        // If label isn't set then return
+        if ( !isset( $field[ 'label' ] ) ) {
+            return false;
+        }
+
+        // If label value is set to false or empty then return
+        if ( isset( $field[ 'label' ] ) && ($field[ 'label' ] === false || empty( $field[ 'label' ] )) ) {
+            return false;
+        }
+
         // Label text
-        //$label_text = isset( $field[ 'label_text' ] ) ? $field[ 'label_text' ] : null;
+        $label_text = $field[ 'label' ];
+
         // Label for
-        //$label_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
-        // If no label text or label for then don't generate label
-//        if ( !$label_text && !$label_for ) {
-//            return false;
-//        }
+        $label_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+
         // Html
-//        $this->update_html( '<label' );
-//
-//        $this->field_for();
-//
-//        $this->update_html( '>' );
-//
-//        $this->field_text();
-//
-//        $this->update_html( '</label>' );
+        $this->update_html( '<label' );
+
+        if ( $label_for ) {
+            $this->field_for();
+        }
+
+        $this->update_html( '>' );
+
+        $this->field_text( $label_text );
+
+        $this->update_html( '</label>' );
     }
 
     // Text input
@@ -307,11 +317,14 @@ class Form
     }
 
     // Generate field text
-    private function field_text() {
+    private function field_text( $text = null ) {
         $field = $this->get_field();
 
-        // Set field text or null if not supplied
-        $text = isset( $field[ 'text' ] ) ? $field[ 'text' ] : null;
+        // Text is supplied text, or if not supplied it looks for text value on field array
+        if ( !$text ) {
+            // Set field text or null if not supplied
+            $text = isset( $field[ 'text' ] ) ? $field[ 'text' ] : null;
+        }
 
         if ( $text ) {
             $html = $text;

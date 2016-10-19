@@ -17,16 +17,13 @@
                 "name" => "text_field_one",
                 "id" => "textFieldOne",
                 "value" => "Text box one value",
-                "label" => array (
-                    "text" => "label text"
-                ),
+                "label" => "Text box one label",
                 "placeholder" => "Text box placeholder"
             ),
             // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
-                "label" => false,
                 "placeholder" => "Please enter your email here"
             ),
             // Button
@@ -40,6 +37,7 @@
             array (
                 "input" => "button",
                 "type" => "submit",
+                "label" => "Submit button label text",
                 "value" => "submit button value"
             ),
             array (
@@ -48,7 +46,8 @@
                     "Option one text" => "1",
                     "Option two text" => "2",
                     "Option three text" => "Value for option three"
-                )
+                ),
+                "label" => ""
             ),
             // Radio button group
             // Name = name of radio button group
