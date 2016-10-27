@@ -10,6 +10,12 @@
         <?php
         // Tester - three fields
         $ths = 4;
+        $form = array (
+            "id" => "formId",
+            "name" => "formName",
+            "method" => "post",
+            "action" => "self",
+        );
         $fields = array (
             // Text input one
             array (
@@ -79,8 +85,8 @@
                         "checked" => false,
                         "disabled" => false
                     ),
-                    "three" => array(),
-                    "four" => array(),
+                    "three" => array (),
+                    "four" => array (),
                     "five" => array (
                         "checked" => true,
                         "disabled" => false
@@ -106,7 +112,7 @@
 //            )
         );
 
-        $form = new Form( $fields );
+        $form = new Form( $form, $fields );
         $form->renderForm();
         ?>
     </body>

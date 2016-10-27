@@ -12,30 +12,111 @@ class Form
 
     // Properties
     // Object with info about form fields
+    private $form;
     private $fields;
     private $field;
     private $html;
 
     // Constructor
-    public function __construct( $fields_object ) {
+    public function __construct( $form_object, $fields_object ) {
+
+        $this->set_form( $form_object );
+
+        $this->update_html( '<form' );
+
+        if ( isset( $form_object[ 'id' ] ) ) {
+            $this->formId();
+        }
+
+        if ( isset( $form_object[ 'name' ] ) ) {
+            $this->formName();
+        }
+
+        if ( isset( $form_object[ 'method' ] ) ) {
+            $this->formMethod();
+        }
+
+        if ( isset( $form_object[ 'action' ] ) ) {
+            $this->formAction();
+        }
+
+        $this->update_html( ' />' );
+
         $this->set_fields( $fields_object );
 
         foreach ( $fields_object as $field ) {
+
+            // If the field 
             $this->set_field( $field );
 
             // Create label
             $this->label();
-            
+
             // Establish input type
             $this->input_type();
 
             $this->set_html( $this->get_html() . "<br />" );
         }
+
+        $this->update_html( '</form>' );
     }
 
     // Render form
     public function renderForm() {
         echo $this->get_html();
+    }
+
+    // Form Id
+    private function formId() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'id' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' id="' . $form[ 'id' ] . '"' );
+    }
+
+    // Form name
+    private function formName() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'name' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' name="' . $form[ 'name' ] . '"' );
+    }
+
+    // Form method
+    private function formMethod() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'method' ] ) ) {
+            return false;
+        }
+
+        $form_method = strtolower( $form[ 'method' ] );
+
+        if ( $form_method != "post" && $form_method != "get" ) {
+            return false;
+        }
+
+        $this->update_html( ' method="' . $form_method . '"' );
+    }
+
+    private function formAction() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'action' ] ) ) {
+            return false;
+        }
+
+        $form_action = $form[ 'action' ];
+
+        if ( strtolower( $form_action ) == "self" ) {
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+        }
     }
 
     // Input type
@@ -214,6 +295,7 @@ class Form
         }
     }
 
+    // Select dropdown
     private function select_dropdown() {
         $field = $this->get_field();
 
@@ -366,7 +448,15 @@ class Form
         $this->set_html( $this->get_html() . $html );
     }
 
-    // Getters and setters
+    // GETTERS AND SETTERS
+    private function get_form() {
+        return $this->form;
+    }
+
+    private function set_form( $form_object ) {
+        $this->form = $form_object;
+    }
+
     private function get_fields() {
         return $this->fields;
     }
