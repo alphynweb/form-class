@@ -112,8 +112,8 @@
 //            )
         );
 
-        $form = new Form( $form, $fields );
-        $form->renderForm();
+        $new_form = new Form( $form, $fields );
+        $new_form->renderForm();
         ?>
     </body>
 </html>
