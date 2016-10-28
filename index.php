@@ -51,6 +51,11 @@
                 "value" => "submit button value"
             ),
             array (
+                "input" => "link",
+                "text" => "Forgot your password?",
+                "href" => "http://www.google.com"
+            ),
+            array (
                 "input" => "select",
                 "options" => array (
                     "Option one text" => "1",

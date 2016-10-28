@@ -182,6 +182,8 @@ class Form
             case "password":
                 $this->password_input();
                 break;
+            case "link":
+                $this->link_input();
                 break;
             default:
                 break;
@@ -265,7 +267,7 @@ class Form
 
     // Password input
     private function password_input() {
-        
+
         // Html
         $this->update_html( '<input type="password"' );
 
@@ -362,6 +364,36 @@ class Form
         $this->field_text();
 
         $this->update_html( '</submit>' );
+    }
+
+    private function link_input() {
+        $field = $this->get_field();
+
+        // If no text or href set then return
+        if ( !isset( $field[ 'text' ] ) || !isset( $field[ 'href' ] ) ) {
+            return false;
+        }
+
+        // If text or href are empty then return
+        if ( empty( $field[ 'text' ] ) || empty( $field[ 'href' ] ) ) {
+            return false;
+        }
+
+        $text = $field[ 'text' ];
+        $href = $field[ 'href' ];
+
+        // Html
+        $this->update_html( '<a' );
+
+        $this->field_href();
+
+        $this->field_class();
+
+        $this->update_html( '>' );
+
+        $this->field_text();
+
+        $this->update_html( '</a>' );
     }
 
     private function field_type() {
@@ -470,6 +502,26 @@ class Form
 
         if ( $disabled ) {
             $this->update_html( ' disabled="disabled"' );
+        }
+    }
+    
+    private function field_href() {
+        $field = $this->get_field();
+        
+        $href = isset($field['href']) ? $field['href'] : false;
+        
+        if ($href) {
+            $this->update_html(' href="' . $href . '"');
+        }
+    }
+    
+    private function field_class() {
+        $field = $this->get_field();
+        
+        $class = isset($field['class']) ? $field['class'] : false;
+        
+        if ($class) {
+            $this->update_html(' class="' . $class . '"');
         }
     }
 
