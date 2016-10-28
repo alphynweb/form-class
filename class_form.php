@@ -56,6 +56,8 @@ class Form
             $this->set_html( $this->get_html() . "<br />" );
         }
 
+        $this->formErrorMessage();
+        
         $this->update_html( '</form>' );
     }
 
@@ -135,6 +137,18 @@ class Form
         $form_message = $form[ 'message' ];
 
         $this->update_html( '<p>' . $form_message . '</p>' );
+    }
+    
+    private function formErrorMessage() {
+        $form = $this->get_form();
+        
+        if (!isset($form['error'])) {
+            return false;
+        }
+        
+        $error_message = $form['error'];
+        
+        $this->update_html('<div class="error-message">' . $error_message . '</div>');
     }
 
     // Input type
