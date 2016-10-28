@@ -31,6 +31,11 @@
                 "name" => "email",
                 "placeholder" => "Please enter your email here"
             ),
+            // Password input
+            array(
+                "input" => "password",
+                "name" => "password"
+            ),
             // Button
             array (
                 "input" => "button",

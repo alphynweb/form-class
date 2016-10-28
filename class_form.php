@@ -37,7 +37,7 @@ class Form
         $this->formAction();
 
         $this->update_html( ' />' );
-        
+
         $this->formMessage();
 
         $this->set_fields( $fields_object );
@@ -124,17 +124,17 @@ class Form
 
         $this->update_html( ' action="' . $form_action . '"' );
     }
-    
+
     private function formMessage() {
         $form = $this->get_form();
-        
-        if (!isset($form['message'])) {
+
+        if ( !isset( $form[ 'message' ] ) ) {
             return false;
         }
-        
-        $form_message = $form['message'];
-        
-        $this->update_html('<p>' . $form_message . '</p>');
+
+        $form_message = $form[ 'message' ];
+
+        $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
     // Input type
@@ -266,6 +266,18 @@ class Form
     // Password input
     private function password_input() {
         
+        // Html
+        $this->update_html( '<input type="password"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->field_value();
+
+        $this->field_placeholder();
+
+        $this->update_html( '/>' );
     }
 
     // Button
