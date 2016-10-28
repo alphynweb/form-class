@@ -32,7 +32,7 @@
                 "placeholder" => "Please enter your email here"
             ),
             // Password input
-            array(
+            array (
                 "input" => "password",
                 "name" => "password"
             ),
@@ -53,7 +53,8 @@
             array (
                 "input" => "link",
                 "text" => "Forgot your password?",
-                "href" => "http://www.google.com"
+                "href" => "http://www.google.com",
+                "class" => "button"
             ),
             array (
                 "input" => "select",

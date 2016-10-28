@@ -297,6 +297,8 @@ class Form
         $this->field_name();
 
         $this->field_id();
+        
+        $this->field_value();
 
         $this->update_html( '>' );
 
@@ -358,6 +360,8 @@ class Form
         $this->field_name();
 
         $this->field_id();
+        
+        $this->field_value();
 
         $this->update_html( '>' );
 
