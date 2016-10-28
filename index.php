@@ -13,8 +13,7 @@
         $form = array (
             "id" => "formId",
             "name" => "formName",
-            "method" => "post",
-            "action" => "self",
+            "method" => "post"
         );
         $fields = array (
             // Text input one

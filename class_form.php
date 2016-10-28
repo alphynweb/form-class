@@ -32,13 +32,9 @@ class Form
             $this->formName();
         }
 
-        if ( isset( $form_object[ 'method' ] ) ) {
-            $this->formMethod();
-        }
+        $this->formMethod();
 
-        if ( isset( $form_object[ 'action' ] ) ) {
-            $this->formAction();
-        }
+        $this->formAction();
 
         $this->update_html( ' />' );
 
@@ -93,7 +89,9 @@ class Form
         $form = $this->get_form();
 
         if ( !isset( $form[ 'method' ] ) ) {
-            return false;
+            // Default to get if no method supplied
+            $this->update_html( ' method="get"' );
+            return true;
         }
 
         $form_method = strtolower( $form[ 'method' ] );
@@ -108,15 +106,21 @@ class Form
     private function formAction() {
         $form = $this->get_form();
 
+        // If no form action supplied, default to _self.
         if ( !isset( $form[ 'action' ] ) ) {
-            return false;
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            return true;
         }
 
         $form_action = $form[ 'action' ];
 
-        if ( strtolower( $form_action ) == "self" ) {
+        // self or empty = _self
+        if ( strtolower( $form_action ) == "self" || $form_action == "" ) {
             $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            return true;
         }
+
+        $this->update_html( ' action="' . $form_action . '"' );
     }
 
     // Input type
