@@ -12,26 +12,129 @@ class Form
 
     // Properties
     // Object with info about form fields
+    private $form;
     private $fields;
     private $field;
     private $html;
 
     // Constructor
-    public function __construct( $fields_object ) {
+    public function __construct( $form_object, $fields_object ) {
+
+        $this->set_form( $form_object );
+
+        $this->update_html( '<form' );
+
+        if ( isset( $form_object[ 'id' ] ) ) {
+            $this->formId();
+        }
+
+        if ( isset( $form_object[ 'name' ] ) ) {
+            $this->formName();
+        }
+
+        $this->formMethod();
+
+        $this->formAction();
+
+        $this->update_html( ' />' );
+
+        $this->formMessage();
+
         $this->set_fields( $fields_object );
 
         foreach ( $fields_object as $field ) {
-            $this->set_field( $field );
 
-            // Establish input type
-            $this->input_type();
+            // If the field 
+            $this->set_field( $field );
 
             // Create label
             $this->label();
 
+            // Establish input type
+            $this->input_type();
 
             $this->set_html( $this->get_html() . "<br />" );
         }
+
+        $this->update_html( '</form>' );
+    }
+
+    // Render form
+    public function renderForm() {
+        echo $this->get_html();
+    }
+
+    // Form Id
+    private function formId() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'id' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' id="' . $form[ 'id' ] . '"' );
+    }
+
+    // Form name
+    private function formName() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'name' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' name="' . $form[ 'name' ] . '"' );
+    }
+
+    // Form method
+    private function formMethod() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'method' ] ) ) {
+            // Default to get if no method supplied
+            $this->update_html( ' method="get"' );
+            return true;
+        }
+
+        $form_method = strtolower( $form[ 'method' ] );
+
+        if ( $form_method != "post" && $form_method != "get" ) {
+            return false;
+        }
+
+        $this->update_html( ' method="' . $form_method . '"' );
+    }
+
+    private function formAction() {
+        $form = $this->get_form();
+
+        // If no form action supplied, default to _self.
+        if ( !isset( $form[ 'action' ] ) ) {
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            return true;
+        }
+
+        $form_action = $form[ 'action' ];
+
+        // self or empty = _self
+        if ( strtolower( $form_action ) == "self" || $form_action == "" ) {
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            return true;
+        }
+
+        $this->update_html( ' action="' . $form_action . '"' );
+    }
+
+    private function formMessage() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'message' ] ) ) {
+            return false;
+        }
+
+        $form_message = $form[ 'message' ];
+
+        $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
     // Input type
@@ -53,7 +156,7 @@ class Form
                 $this->radio_group();
                 break;
             case "select":
-
+                $this->select_dropdown();
                 break;
             case "button":
                 // If type of input is set
@@ -87,30 +190,41 @@ class Form
 
     // Label
     private function label() {
-//        $field = $this->get_field();
-//
-//        // If label value is set to false then return
-//        if ( isset( $field[ 'label' ] ) && $field[ 'label' ] === false ) {
-//            return false;
-//        }
+        // Label will not show if :
+        // No label text
+        // label = false
+        // Label "for" will show if the labelled element has an id
+
+        $field = $this->get_field();
+
+        // If label isn't set then return
+        if ( !isset( $field[ 'label' ] ) ) {
+            return false;
+        }
+
+        // If label value is set to false or empty then return
+        if ( isset( $field[ 'label' ] ) && ($field[ 'label' ] === false || empty( $field[ 'label' ] )) ) {
+            return false;
+        }
+
         // Label text
-        //$label_text = isset( $field[ 'label_text' ] ) ? $field[ 'label_text' ] : null;
+        $label_text = $field[ 'label' ];
+
         // Label for
-        //$label_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
-        // If no label text or label for then don't generate label
-//        if ( !$label_text && !$label_for ) {
-//            return false;
-//        }
+        $label_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+
         // Html
-//        $this->update_html( '<label' );
-//
-//        $this->field_for();
-//
-//        $this->update_html( '>' );
-//
-//        $this->field_text();
-//
-//        $this->update_html( '</label>' );
+        $this->update_html( '<label' );
+
+        if ( $label_for ) {
+            $this->field_for();
+        }
+
+        $this->update_html( '>' );
+
+        $this->field_text( $label_text );
+
+        $this->update_html( '</label>' );
     }
 
     // Text input
@@ -152,6 +266,18 @@ class Form
     // Password input
     private function password_input() {
         
+        // Html
+        $this->update_html( '<input type="password"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->field_value();
+
+        $this->field_placeholder();
+
+        $this->update_html( '/>' );
     }
 
     // Button
@@ -179,7 +305,41 @@ class Form
 
     // Radio group 
     private function radio_group() {
-        
+        $field = $this->get_field();
+
+        $buttons = isset( $field[ 'buttons' ] ) ? $field[ 'buttons' ] : null;
+
+        // If no buttons stated then return without rendering anything
+        if ( !$buttons ) {
+            return false;
+        }
+
+        foreach ( $buttons as $button ) {
+            $this->update_html( '<input type="radio"' );
+
+            $this->field_name();
+            $this->field_checked( $button );
+            $this->field_disabled( $button );
+
+            $this->update_html( ' />' );
+        }
+    }
+
+    // Select dropdown
+    private function select_dropdown() {
+        $field = $this->get_field();
+
+        // Html
+        $this->update_html( '<select>' );
+
+        // Get options
+        $options = $field[ 'options' ];
+
+        foreach ( $options as $key => $value ) {
+            $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+        }
+
+        $this->update_html( '</select>' );
     }
 
     // Submit button
@@ -269,11 +429,14 @@ class Form
     }
 
     // Generate field text
-    private function field_text() {
+    private function field_text( $text = null ) {
         $field = $this->get_field();
 
-        // Set field text or null if not supplied
-        $text = isset( $field[ 'text' ] ) ? $field[ 'text' ] : null;
+        // Text is supplied text, or if not supplied it looks for text value on field array
+        if ( !$text ) {
+            // Set field text or null if not supplied
+            $text = isset( $field[ 'text' ] ) ? $field[ 'text' ] : null;
+        }
 
         if ( $text ) {
             $html = $text;
@@ -294,12 +457,36 @@ class Form
         }
     }
 
+    private function field_checked( $field ) {
+        $checked = isset( $field[ 'checked' ] ) ? $field[ 'checked' ] : false;
+
+        if ( $checked ) {
+            $this->update_html( ' checked="checked"' );
+        }
+    }
+
+    private function field_disabled( $field ) {
+        $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
+
+        if ( $disabled ) {
+            $this->update_html( ' disabled="disabled"' );
+        }
+    }
+
     // Update form html
     private function update_html( $html ) {
         $this->set_html( $this->get_html() . $html );
     }
 
-    // Getters and setters
+    // GETTERS AND SETTERS
+    private function get_form() {
+        return $this->form;
+    }
+
+    private function set_form( $form_object ) {
+        $this->form = $form_object;
+    }
+
     private function get_fields() {
         return $this->fields;
     }

@@ -9,7 +9,12 @@
     <body>
         <?php
         // Tester - three fields
-        $ths = 4;
+        $form = array (
+            "message" => "This is a sample message for the form",
+            "id" => "formId",
+            "name" => "formName",
+            "method" => "post"
+        );
         $fields = array (
             // Text input one
             array (
@@ -17,17 +22,19 @@
                 "name" => "text_field_one",
                 "id" => "textFieldOne",
                 "value" => "Text box one value",
-                "label" => array(
-                    "text" => "label text"
-                ),
+                "label" => "Text box one label",
                 "placeholder" => "Text box placeholder"
             ),
             // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
-                "label" => false,
                 "placeholder" => "Please enter your email here"
+            ),
+            // Password input
+            array(
+                "input" => "password",
+                "name" => "password"
             ),
             // Button
             array (
@@ -40,7 +47,55 @@
             array (
                 "input" => "button",
                 "type" => "submit",
+                "label" => "Submit button label text",
                 "value" => "submit button value"
+            ),
+            array (
+                "input" => "select",
+                "options" => array (
+                    "Option one text" => "1",
+                    "Option two text" => "2",
+                    "Option three text" => "Value for option three"
+                ),
+                "label" => ""
+            ),
+            // Radio button group
+            // Name = name of radio button group
+            // Buttons = array of buttons. Each button has value, checked, 
+            // Example -
+            // array(
+            // "input" => "radio",
+            // "name" => "Name of radio button group",
+            // "buttons" => array (
+            //      "Value one" => array (
+            //                  "checked" => true,
+            //                  "disabled" => true
+            //                    ),
+            //      "Value two" => array (
+            //                  "checked" => false,
+            //                  "disabled" => false
+            //                    )
+            //              )
+            // )
+            array (
+                "input" => "radio",
+                "name" => "radio button group",
+                "buttons" => array (
+                    "one" => array (
+                        "checked" => true,
+                        "disabled" => true
+                    ),
+                    "two" => array (
+                        "checked" => false,
+                        "disabled" => false
+                    ),
+                    "three" => array (),
+                    "four" => array (),
+                    "five" => array (
+                        "checked" => true,
+                        "disabled" => false
+                    )
+                )
             )
                 // Text input three
 //            array (
@@ -61,9 +116,8 @@
 //            )
         );
 
-        $form = new Form( $fields );
-        $html = $form->get_html();
-        echo $html;
+        $new_form = new Form( $form, $fields );
+        $new_form->renderForm();
         ?>
     </body>
 </html>
