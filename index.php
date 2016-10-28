@@ -9,8 +9,8 @@
     <body>
         <?php
         // Tester - three fields
-        $ths = 4;
         $form = array (
+            "message" => "This is a sample message for the form",
             "id" => "formId",
             "name" => "formName",
             "method" => "post"

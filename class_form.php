@@ -37,6 +37,8 @@ class Form
         $this->formAction();
 
         $this->update_html( ' />' );
+        
+        $this->formMessage();
 
         $this->set_fields( $fields_object );
 
@@ -121,6 +123,18 @@ class Form
         }
 
         $this->update_html( ' action="' . $form_action . '"' );
+    }
+    
+    private function formMessage() {
+        $form = $this->get_form();
+        
+        if (!isset($form['message'])) {
+            return false;
+        }
+        
+        $form_message = $form['message'];
+        
+        $this->update_html('<p>' . $form_message . '</p>');
     }
 
     // Input type
