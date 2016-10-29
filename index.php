@@ -103,6 +103,12 @@
                         "disabled" => false
                     )
                 )
+            ),
+            // Hidden input
+            array(
+                "input" => "hidden",
+                "name" => "Hidden Input",
+                "id" => "HiddenInputId"
             )
                 // Text input three
 //            array (

@@ -201,6 +201,9 @@ class Form
             case "link":
                 $this->link_input();
                 break;
+            case "hidden":
+                $this->hidden_input();
+                break;
             default:
                 break;
         }
@@ -414,6 +417,19 @@ class Form
         $this->field_text();
 
         $this->update_html( '</a>' );
+    }
+    
+    private function hidden_input() {
+        // Html
+        $this->update_html( '<input type="hidden"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->field_value();
+
+        $this->update_html( '/>' );
     }
 
     private function field_type() {
