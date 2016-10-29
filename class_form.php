@@ -57,7 +57,7 @@ class Form
         }
 
         $this->formErrorMessage();
-        
+
         $this->update_html( '</form>' );
     }
 
@@ -110,9 +110,11 @@ class Form
     private function formAction() {
         $form = $this->get_form();
 
+        $querystring = isset( $form[ 'querystring' ] ) ? "?" . $form[ 'querystring' ] : null;
+
         // If no form action supplied, default to _self.
         if ( !isset( $form[ 'action' ] ) ) {
-            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . $querystring . '"' );
             return true;
         }
 
@@ -120,11 +122,11 @@ class Form
 
         // self or empty = _self
         if ( strtolower( $form_action ) == "self" || $form_action == "" ) {
-            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . $querystring . '"' );
             return true;
         }
 
-        $this->update_html( ' action="' . $form_action . '"' );
+        $this->update_html( ' action="' . $form_action . $querystring . '"' );
     }
 
     private function formMessage() {
@@ -138,17 +140,17 @@ class Form
 
         $this->update_html( '<p>' . $form_message . '</p>' );
     }
-    
+
     private function formErrorMessage() {
         $form = $this->get_form();
-        
-        if (!isset($form['error'])) {
+
+        if ( !isset( $form[ 'error' ] ) ) {
             return false;
         }
-        
-        $error_message = $form['error'];
-        
-        $this->update_html('<div class="error-message">' . $error_message . '</div>');
+
+        $error_message = $form[ 'error' ];
+
+        $this->update_html( '<div class="error-message">' . $error_message . '</div>' );
     }
 
     // Input type
@@ -311,7 +313,7 @@ class Form
         $this->field_name();
 
         $this->field_id();
-        
+
         $this->field_value();
 
         $this->update_html( '>' );
@@ -374,7 +376,7 @@ class Form
         $this->field_name();
 
         $this->field_id();
-        
+
         $this->field_value();
 
         $this->update_html( '>' );
@@ -522,24 +524,24 @@ class Form
             $this->update_html( ' disabled="disabled"' );
         }
     }
-    
+
     private function field_href() {
         $field = $this->get_field();
-        
-        $href = isset($field['href']) ? $field['href'] : false;
-        
-        if ($href) {
-            $this->update_html(' href="' . $href . '"');
+
+        $href = isset( $field[ 'href' ] ) ? $field[ 'href' ] : false;
+
+        if ( $href ) {
+            $this->update_html( ' href="' . $href . '"' );
         }
     }
-    
+
     private function field_class() {
         $field = $this->get_field();
-        
-        $class = isset($field['class']) ? $field['class'] : false;
-        
-        if ($class) {
-            $this->update_html(' class="' . $class . '"');
+
+        $class = isset( $field[ 'class' ] ) ? $field[ 'class' ] : false;
+
+        if ( $class ) {
+            $this->update_html( ' class="' . $class . '"' );
         }
     }
 

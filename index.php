@@ -13,7 +13,8 @@
             "message" => "This is a sample message for the form",
             "id" => "formId",
             "name" => "formName",
-            "method" => "post"
+            "method" => "post",
+            "querystring" => "t=10&r=20"
         );
         $fields = array (
             // Text input one
