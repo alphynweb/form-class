@@ -53,7 +53,7 @@ class Form
             // Establish input type
             $this->input_type();
 
-            $this->set_html( $this->get_html() . "<br />" );
+            $this->set_html( $this->get_html() );
         }
 
         $this->formErrorMessage();
