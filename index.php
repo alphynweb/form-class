@@ -109,6 +109,10 @@
                 "input" => "hidden",
                 "name" => "Hidden Input",
                 "id" => "HiddenInputId"
+            ),
+            array(
+                "input" => "text",
+                "readonly" => true
             )
                 // Text input three
 //            array (

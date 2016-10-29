@@ -259,6 +259,8 @@ class Form
         $this->field_id();
 
         $this->field_value();
+        
+        $this->field_readonly();
 
         $this->field_placeholder();
 
@@ -558,6 +560,18 @@ class Form
 
         if ( $class ) {
             $this->update_html( ' class="' . $class . '"' );
+        }
+    }
+    
+    private function field_readonly() {
+        $field = $this->get_field();
+        
+        if (!isset($field['readonly'])) {
+            return false;
+        }
+        
+        if ($field['readonly'] == true) {
+            $this->update_html(' readonly="readonly"');
         }
     }
 
