@@ -35,7 +35,7 @@ class Form
         $this->formMethod();
 
         $this->formAction();
-        
+
         $this->formEnctype();
 
         $this->update_html( ' />' );
@@ -130,10 +130,10 @@ class Form
 
         $this->update_html( ' action="' . $form_action . $querystring . '"' );
     }
-    
+
     private function formEnctype() {
         $form = $this->get_form();
-        
+
         if ( !isset( $form[ 'enctype' ] ) ) {
             return false;
         }
@@ -218,6 +218,9 @@ class Form
                 break;
             case "hidden":
                 $this->hidden_input();
+                break;
+            case "file":
+                $this->file_input();
                 break;
             default:
                 break;
@@ -316,6 +319,19 @@ class Form
         $this->field_placeholder();
 
         $this->update_html( '/>' );
+    }
+
+    // File input
+    private function file_input() {
+        $field = $this->get_field();
+
+        $this->update_html( '<input type="file"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->update_html( '>' );
     }
 
     // Textarea

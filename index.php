@@ -18,6 +18,12 @@
             "querystring" => "t=10&r=20"
         );
         $fields = array (
+            // File
+            array(
+                "input" => "file",
+                "name" => "file_input",
+                "id" => "file_input"
+            ),
             // Text input one
             array (
                 "input" => "text",
