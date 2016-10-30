@@ -208,7 +208,7 @@ class Form
                 }
                 break;
             case "submit":
-                $this->submit();
+                $this->submit_button();
                 break;
             case "password":
                 $this->password_input();

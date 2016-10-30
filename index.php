@@ -63,6 +63,12 @@
                 "label" => "Submit button label text",
                 "value" => "submit button value"
             ),
+            // Submit button updated
+            array (
+                "input" => "submit",
+                "label" => "Submit button 2 label text",
+                "value" => "submit button value"
+            ),
             array (
                 "input" => "link",
                 "text" => "Forgot your password?",
