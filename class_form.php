@@ -36,6 +36,8 @@ class Form
 
         $this->formAction();
 
+        $this->formEnctype();
+
         $this->update_html( ' />' );
 
         $this->formMessage();
@@ -53,8 +55,10 @@ class Form
             // Establish input type
             $this->input_type();
 
-            $this->set_html( $this->get_html() . "<br />" );
+            $this->set_html( $this->get_html() );
         }
+
+        $this->formErrorMessage();
 
         $this->update_html( '</form>' );
     }
@@ -108,9 +112,11 @@ class Form
     private function formAction() {
         $form = $this->get_form();
 
+        $querystring = isset( $form[ 'querystring' ] ) ? "?" . $form[ 'querystring' ] : null;
+
         // If no form action supplied, default to _self.
         if ( !isset( $form[ 'action' ] ) ) {
-            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . $querystring . '"' );
             return true;
         }
 
@@ -118,11 +124,21 @@ class Form
 
         // self or empty = _self
         if ( strtolower( $form_action ) == "self" || $form_action == "" ) {
-            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . '"' );
+            $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . $querystring . '"' );
             return true;
         }
 
-        $this->update_html( ' action="' . $form_action . '"' );
+        $this->update_html( ' action="' . $form_action . $querystring . '"' );
+    }
+
+    private function formEnctype() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'enctype' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' enctype="' . $form[ 'enctype' ] . '"' );
     }
 
     private function formMessage() {
@@ -135,6 +151,18 @@ class Form
         $form_message = $form[ 'message' ];
 
         $this->update_html( '<p>' . $form_message . '</p>' );
+    }
+
+    private function formErrorMessage() {
+        $form = $this->get_form();
+
+        if ( !isset( $form[ 'error' ] ) ) {
+            return false;
+        }
+
+        $error_message = $form[ 'error' ];
+
+        $this->update_html( '<div class="error-message">' . $error_message . '</div>' );
     }
 
     // Input type
@@ -151,6 +179,9 @@ class Form
             // Email input
             case "email":
                 $this->email_input();
+                break;
+            case "textarea":
+                $this->textarea();
                 break;
             case "radio":
                 $this->radio_group();
@@ -177,11 +208,19 @@ class Form
                 }
                 break;
             case "submit":
-                $this->submit();
+                $this->submit_button();
                 break;
             case "password":
                 $this->password_input();
                 break;
+            case "link":
+                $this->link_input();
+                break;
+            case "hidden":
+                $this->hidden_input();
+                break;
+            case "file":
+                $this->file_input();
                 break;
             default:
                 break;
@@ -239,6 +278,8 @@ class Form
 
         $this->field_value();
 
+        $this->field_readonly();
+
         $this->field_placeholder();
 
         $html = $this->get_html() . '/>';
@@ -265,7 +306,7 @@ class Form
 
     // Password input
     private function password_input() {
-        
+
         // Html
         $this->update_html( '<input type="password"' );
 
@@ -278,6 +319,36 @@ class Form
         $this->field_placeholder();
 
         $this->update_html( '/>' );
+    }
+
+    // File input
+    private function file_input() {
+        $field = $this->get_field();
+
+        $this->update_html( '<input type="file"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->update_html( '>' );
+    }
+
+    // Textarea
+    private function textarea() {
+        $field = $this->get_field();
+
+        $this->update_html( '<textarea' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->update_html( '>' );
+
+        $this->field_text();
+
+        $this->update_html( '</textarea>' );
     }
 
     // Button
@@ -295,6 +366,8 @@ class Form
         $this->field_name();
 
         $this->field_id();
+
+        $this->field_value();
 
         $this->update_html( '>' );
 
@@ -357,11 +430,56 @@ class Form
 
         $this->field_id();
 
+        $this->field_value();
+
         $this->update_html( '>' );
 
         $this->field_text();
 
         $this->update_html( '</submit>' );
+    }
+
+    private function link_input() {
+        $field = $this->get_field();
+
+        // If no text or href set then return
+        if ( !isset( $field[ 'text' ] ) || !isset( $field[ 'href' ] ) ) {
+            return false;
+        }
+
+        // If text or href are empty then return
+        if ( empty( $field[ 'text' ] ) || empty( $field[ 'href' ] ) ) {
+            return false;
+        }
+
+        $text = $field[ 'text' ];
+        $href = $field[ 'href' ];
+
+        // Html
+        $this->update_html( '<a' );
+
+        $this->field_href();
+
+        $this->field_class();
+
+        $this->update_html( '>' );
+
+        $this->field_text();
+
+        $this->update_html( '</a>' );
+    }
+
+    private function hidden_input() {
+        // Html
+        $this->update_html( '<input type="hidden"' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->field_value();
+
+        $this->update_html( '/>' );
     }
 
     private function field_type() {
@@ -470,6 +588,38 @@ class Form
 
         if ( $disabled ) {
             $this->update_html( ' disabled="disabled"' );
+        }
+    }
+
+    private function field_href() {
+        $field = $this->get_field();
+
+        $href = isset( $field[ 'href' ] ) ? $field[ 'href' ] : false;
+
+        if ( $href ) {
+            $this->update_html( ' href="' . $href . '"' );
+        }
+    }
+
+    private function field_class() {
+        $field = $this->get_field();
+
+        $class = isset( $field[ 'class' ] ) ? $field[ 'class' ] : false;
+
+        if ( $class ) {
+            $this->update_html( ' class="' . $class . '"' );
+        }
+    }
+
+    private function field_readonly() {
+        $field = $this->get_field();
+
+        if ( !isset( $field[ 'readonly' ] ) ) {
+            return false;
+        }
+
+        if ( $field[ 'readonly' ] == true ) {
+            $this->update_html( ' readonly="readonly"' );
         }
     }
 

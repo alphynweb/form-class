@@ -13,9 +13,17 @@
             "message" => "This is a sample message for the form",
             "id" => "formId",
             "name" => "formName",
-            "method" => "post"
+            "method" => "post",
+            "enctype" => "multipart/form-data",
+            "querystring" => "t=10&r=20"
         );
         $fields = array (
+            // File
+            array(
+                "input" => "file",
+                "name" => "file_input",
+                "id" => "file_input"
+            ),
             // Text input one
             array (
                 "input" => "text",
@@ -32,9 +40,14 @@
                 "placeholder" => "Please enter your email here"
             ),
             // Password input
-            array(
+            array (
                 "input" => "password",
                 "name" => "password"
+            ),
+            // Textarea
+            array (
+                "input" => "textarea",
+                "text" => "Test text for textarea"
             ),
             // Button
             array (
@@ -49,6 +62,18 @@
                 "type" => "submit",
                 "label" => "Submit button label text",
                 "value" => "submit button value"
+            ),
+            // Submit button updated
+            array (
+                "input" => "submit",
+                "label" => "Submit button 2 label text",
+                "value" => "submit button value"
+            ),
+            array (
+                "input" => "link",
+                "text" => "Forgot your password?",
+                "href" => "http://www.google.com",
+                "class" => "button"
             ),
             array (
                 "input" => "select",
@@ -96,6 +121,16 @@
                         "disabled" => false
                     )
                 )
+            ),
+            // Hidden input
+            array (
+                "input" => "hidden",
+                "name" => "Hidden Input",
+                "id" => "HiddenInputId"
+            ),
+            array (
+                "input" => "text",
+                "readonly" => true
             )
                 // Text input three
 //            array (
