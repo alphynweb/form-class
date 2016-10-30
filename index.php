@@ -5,6 +5,13 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            form input {
+                display: block;
+                margin-bottom: 2rem;
+            }
+        </style>
     </head>
     <body>
         <?php
@@ -19,7 +26,7 @@
         );
         $fields = array (
             // File
-            array(
+            array (
                 "input" => "file",
                 "name" => "file_input",
                 "id" => "file_input"
@@ -33,37 +40,38 @@
                 "label" => "Text box one label",
                 "placeholder" => "Text box placeholder"
             ),
-            // Text input two
+//            // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
                 "placeholder" => "Please enter your email here"
             ),
-            // Password input
+////            // Password input
             array (
                 "input" => "password",
-                "name" => "password"
+                "name" => "password",
+                "placeholder" => "Enter your password here"
             ),
-            // Textarea
+////            // Textarea
             array (
                 "input" => "textarea",
                 "text" => "Test text for textarea"
             ),
-            // Button
+////            // Button
             array (
                 "input" => "button",
                 "id" => "button_one_id",
                 "value" => "button one value",
                 "text" => "button one text"
             ),
-            // Submit button
+////            // Submit button
             array (
                 "input" => "button",
                 "type" => "submit",
                 "label" => "Submit button label text",
                 "value" => "submit button value"
             ),
-            // Submit button updated
+////            // Submit button updated
             array (
                 "input" => "submit",
                 "label" => "Submit button 2 label text",
@@ -82,26 +90,27 @@
                     "Option two text" => "2",
                     "Option three text" => "Value for option three"
                 ),
-                "label" => ""
+                "label" => "",
+                "class" => "select-dropdown"
             ),
-            // Radio button group
-            // Name = name of radio button group
-            // Buttons = array of buttons. Each button has value, checked, 
-            // Example -
-            // array(
-            // "input" => "radio",
-            // "name" => "Name of radio button group",
-            // "buttons" => array (
-            //      "Value one" => array (
-            //                  "checked" => true,
-            //                  "disabled" => true
-            //                    ),
-            //      "Value two" => array (
-            //                  "checked" => false,
-            //                  "disabled" => false
-            //                    )
-            //              )
-            // )
+////            // Radio button group
+////            // Name = name of radio button group
+////            // Buttons = array of buttons. Each button has value, checked, 
+////            // Example -
+//             array(
+//             "input" => "radio",
+//             "name" => "Name of radio button group",
+//             "buttons" => array (
+//                  "Value one" => array (
+//                              "checked" => true,
+//                              "disabled" => true
+//                                ),
+//                  "Value two" => array (
+//                              "checked" => false,
+//                              "disabled" => false
+//                                )
+//                          )
+//             ),
             array (
                 "input" => "radio",
                 "name" => "radio button group",
@@ -122,33 +131,34 @@
                     )
                 )
             ),
-            // Hidden input
+////            // Hidden input
             array (
                 "input" => "hidden",
                 "name" => "Hidden Input",
-                "id" => "HiddenInputId"
+                "id" => "HiddenInputId",
+                "value" => "Hidden input value"
             ),
-            array (
-                "input" => "text",
-                "readonly" => true
-            )
-                // Text input three
-//            array (
-//                "type" => "text",
-//                "label_text" => "Label text for text input three",
-//                "placeholder" => "Text box three placeholder text"
-//            ),
-                // Email input
-//            array (
-//                "type" => "email",
-//                "name" => "email_one"
-//            )
-                // Radio group
-                // Submit button
-//            array (
-//                "type" => "submit",
-//                "name" => "submit"
-//            )
+////            array (
+////                "input" => "text",
+////                "readonly" => true
+////            )
+//                // Text input three
+////            array (
+////                "type" => "text",
+////                "label_text" => "Label text for text input three",
+////                "placeholder" => "Text box three placeholder text"
+////            ),
+//                // Email input
+////            array (
+////                "type" => "email",
+////                "name" => "email_one"
+////            )
+//                // Radio group
+//                // Submit button
+////            array (
+////                "type" => "submit",
+////                "name" => "submit"
+////            )
         );
 
         $new_form = new Form( $form, $fields );

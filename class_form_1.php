@@ -166,10 +166,11 @@ class Form
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
-    private function field_attributes( array $attributes = null ) {
+    private function field_attributes() {
         $field = $this->get_field();
         $input_type = isset( $field[ 'input' ] ) ? $field[ 'input' ] : null;
 
+        // Names and IDs are allowed for all fields
         // Name
         $this->field_name();
 
@@ -179,11 +180,94 @@ class Form
         // Class
         $this->field_class();
 
-        if ( $attributes ) {
-            foreach ( $attributes as $attribute ) {
-                $func_name = "field_" . $attribute;
-                $this->$func_name();
-            }
+        // Checked
+        $checked_allowed = array (
+            "radio"
+        );
+
+        if ( in_array( $input_type, $checked_allowed ) ) {
+            $this->field_checked( $field );
+        }
+
+        // Disabled
+        $disabled_allowed = array (
+            "button",
+            "fieldset",
+            "input",
+            "keygen",
+            "optgroup",
+            "option",
+            "select",
+            "textarea"
+        );
+
+        if ( in_array( $input_type, $disabled_allowed ) ) {
+            $this->field_disabled( $field );
+        }
+
+        // For
+        $for_allowed = array (
+            "label"
+        );
+
+        if ( in_array( $input_type, $for_allowed ) ) {
+            $this->field_for();
+        }
+
+        // Href
+        $href_allowed = array (
+            "link"
+        );
+
+        if ( in_array( $input_type, $href_allowed ) ) {
+            $this->field_href();
+        }
+
+        // Placeholder
+        $placeholder_allowed = array (
+            "email",
+            "password",
+            "search",
+            "tel",
+            "text",
+            "url"
+        );
+
+        if ( in_array( $input_type, $placeholder_allowed ) ) {
+            $this->field_placeholder();
+        }
+
+        // Readonly
+        $readonly_allowed = array (
+                );
+
+        if ( in_array( $input_type, $readonly_allowed ) ) {
+            $this->field_readonly();
+        }
+
+        // Text
+//        $text_allowed = array (
+//            "textarea"
+//        );
+//
+//        if ( in_array( $input_type, $text_allowed ) ) {
+//            $this->field_text();
+//        }
+        // Value
+        $value_allowed = array (
+            "button",
+            "checkbox",
+            "email",
+            "hidden",
+            "image",
+            "radio",
+            "submit",
+            "text",
+            "password"
+        );
+
+        if ( in_array( $input_type, $value_allowed ) ) {
+            $this->field_value();
         }
     }
 
@@ -283,17 +367,13 @@ class Form
     // Text input
     private function text_input() {
 
-        $attributes = array (
-            "disabled",
-            "value",
-            "placeholder"
-        );
-
+        $attributes = array("disabled", "value", "placeholder");
+        
         // Opening HTML
         $this->update_html( '<input type="text"' );
 
         // Add attributes
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -302,17 +382,11 @@ class Form
     // Email
     private function email_input() {
 
-        $attributes = array (
-            "disabled",
-            "value",
-            "placeholder"
-        );
-
         // Html
         $this->update_html( '<input type="email"' );
 
         // Add attributes
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -321,16 +395,10 @@ class Form
     // Password input
     private function password_input() {
 
-        $attributes = array (
-            "disabled",
-            "value",
-            "placeholder"
-        );
-
         // Html
         $this->update_html( '<input type="password"' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( ' />' );
     }
@@ -348,12 +416,11 @@ class Form
 
     // Textarea
     private function textarea() {
-        $attributes = array (
-                );
+        $field = $this->get_field();
 
         $this->update_html( '<textarea' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( '>' );
 
@@ -365,14 +432,14 @@ class Form
     // Button
     private function button() {
 
-        $attributes = array (
-            "value"
-        );
+        $field = $this->get_field();
+
+        $type = isset( $field[ 'type' ] ) ? $field[ 'type' ] : null;
 
         // Html
         $this->update_html( '<button type="button"' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( '>' );
 
@@ -403,31 +470,20 @@ class Form
 
     // Select dropdown
     private function select_dropdown() {
-
         $field = $this->get_field();
-        
-        // Get options
-        $options = isset( $field[ 'options' ] ) ? $field[ 'options' ] : null;
-        
-        if (!$options) {
-            return false;
-        }
-
-        $attributes = array (
-                );
 
         // Html
         $this->update_html( '<select' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( '>' );
 
+        // Get options
+        $options = $field[ 'options' ];
 
-        if ( $options ) {
-            foreach ( $options as $key => $value ) {
-                $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
-            }
+        foreach ( $options as $key => $value ) {
+            $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
         }
 
         $this->update_html( '</select>' );
@@ -435,15 +491,14 @@ class Form
 
     // Submit button
     private function submit_button() {
+        $field = $this->get_field();
 
-        $attributes = array (
-            "value"
-        );
+        $type = isset( $field[ 'type' ] ) ? $field[ 'type' ] : null;
 
         // Html
         $this->update_html( '<input type="submit"' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( '>' );
 
@@ -468,14 +523,10 @@ class Form
         $text = $field[ 'text' ];
         $href = $field[ 'href' ];
 
-        $attributes = array (
-            "href"
-        );
-
         // Html
         $this->update_html( '<a' );
 
-        $this->field_attributes( $attributes );
+        $this->field_attributes();
 
         $this->update_html( '>' );
 
@@ -485,14 +536,14 @@ class Form
     }
 
     private function hidden_input() {
-        $attributes = array(
-            "value"
-        );
-        
         // Html
         $this->update_html( '<input type="hidden"' );
 
-        $this->field_attributes($attributes);
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->field_value();
 
         $this->update_html( '/>' );
     }
@@ -598,9 +649,7 @@ class Form
         }
     }
 
-    private function field_disabled() {
-        $field = $this->get_field();
-
+    private function field_disabled( $field ) {
         $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
 
         if ( $disabled ) {
