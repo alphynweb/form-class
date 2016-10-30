@@ -37,6 +37,11 @@
                 "input" => "password",
                 "name" => "password"
             ),
+            // Textarea
+            array (
+                "input" => "textarea",
+                "text" => "Test text for textarea"
+            ),
             // Button
             array (
                 "input" => "button",
@@ -105,12 +110,12 @@
                 )
             ),
             // Hidden input
-            array(
+            array (
                 "input" => "hidden",
                 "name" => "Hidden Input",
                 "id" => "HiddenInputId"
             ),
-            array(
+            array (
                 "input" => "text",
                 "readonly" => true
             )

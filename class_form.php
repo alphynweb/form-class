@@ -168,6 +168,9 @@ class Form
             case "email":
                 $this->email_input();
                 break;
+            case "textarea":
+                $this->textarea();
+                break;
             case "radio":
                 $this->radio_group();
                 break;
@@ -259,7 +262,7 @@ class Form
         $this->field_id();
 
         $this->field_value();
-        
+
         $this->field_readonly();
 
         $this->field_placeholder();
@@ -301,6 +304,23 @@ class Form
         $this->field_placeholder();
 
         $this->update_html( '/>' );
+    }
+
+    // Textarea
+    private function textarea() {
+        $field = $this->get_field();
+
+        $this->update_html( '<textarea' );
+
+        $this->field_name();
+
+        $this->field_id();
+
+        $this->update_html( '>' );
+
+        $this->field_text();
+
+        $this->update_html( '</textarea>' );
     }
 
     // Button
@@ -420,7 +440,7 @@ class Form
 
         $this->update_html( '</a>' );
     }
-    
+
     private function hidden_input() {
         // Html
         $this->update_html( '<input type="hidden"' );
@@ -562,16 +582,16 @@ class Form
             $this->update_html( ' class="' . $class . '"' );
         }
     }
-    
+
     private function field_readonly() {
         $field = $this->get_field();
-        
-        if (!isset($field['readonly'])) {
+
+        if ( !isset( $field[ 'readonly' ] ) ) {
             return false;
         }
-        
-        if ($field['readonly'] == true) {
-            $this->update_html(' readonly="readonly"');
+
+        if ( $field[ 'readonly' ] == true ) {
+            $this->update_html( ' readonly="readonly"' );
         }
     }
 
