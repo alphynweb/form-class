@@ -14,6 +14,7 @@
             "id" => "formId",
             "name" => "formName",
             "method" => "post",
+            "enctype" => "multipart/form-data",
             "querystring" => "t=10&r=20"
         );
         $fields = array (

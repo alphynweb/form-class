@@ -35,6 +35,8 @@ class Form
         $this->formMethod();
 
         $this->formAction();
+        
+        $this->formEnctype();
 
         $this->update_html( ' />' );
 
@@ -127,6 +129,16 @@ class Form
         }
 
         $this->update_html( ' action="' . $form_action . $querystring . '"' );
+    }
+    
+    private function formEnctype() {
+        $form = $this->get_form();
+        
+        if ( !isset( $form[ 'enctype' ] ) ) {
+            return false;
+        }
+
+        $this->update_html( ' enctype="' . $form[ 'enctype' ] . '"' );
     }
 
     private function formMessage() {
