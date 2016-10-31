@@ -244,6 +244,9 @@ class Form
             case "file":
                 $this->file_input();
                 break;
+            case "url":
+                $this->url_input();
+                break;
             default:
                 break;
         }
@@ -310,6 +313,24 @@ class Form
 
         // Html
         $this->update_html( '<input type="email"' );
+
+        // Add attributes
+        $this->field_attributes( $attributes );
+
+        // Closing HTML
+        $this->update_html( ' />' );
+    }
+
+    // Url
+    private function url_input() {
+        $attributes = array (
+            "disabled",
+            "value",
+            "placeholder"
+        );
+
+        // Html
+        $this->update_html( '<input type="url"' );
 
         // Add attributes
         $this->field_attributes( $attributes );
@@ -405,11 +426,11 @@ class Form
     private function select_dropdown() {
 
         $field = $this->get_field();
-        
+
         // Get options
         $options = isset( $field[ 'options' ] ) ? $field[ 'options' ] : null;
-        
-        if (!$options) {
+
+        if ( !$options ) {
             return false;
         }
 
@@ -485,14 +506,14 @@ class Form
     }
 
     private function hidden_input() {
-        $attributes = array(
+        $attributes = array (
             "value"
         );
-        
+
         // Html
         $this->update_html( '<input type="hidden"' );
 
-        $this->field_attributes($attributes);
+        $this->field_attributes( $attributes );
 
         $this->update_html( '/>' );
     }

@@ -59,106 +59,14 @@
             ),
 ////            // Button
             array (
-                "input" => "button",
-                "id" => "button_one_id",
-                "value" => "button one value",
-                "text" => "button one text"
-            ),
-////            // Submit button
-            array (
-                "input" => "button",
-                "type" => "submit",
-                "label" => "Submit button label text",
-                "value" => "submit button value"
-            ),
-////            // Submit button updated
-            array (
                 "input" => "submit",
-                "label" => "Submit button 2 label text",
-                "value" => "submit button value"
-            ),
-            array (
-                "input" => "link",
-                "text" => "Forgot your password?",
-                "href" => "http://www.google.com",
-                "class" => "button"
-            ),
-            array (
-                "input" => "select",
-                "options" => array (
-                    "Option one text" => "1",
-                    "Option two text" => "2",
-                    "Option three text" => "Value for option three"
-                ),
-                "label" => "",
-                "class" => "select-dropdown"
-            ),
-////            // Radio button group
-////            // Name = name of radio button group
-////            // Buttons = array of buttons. Each button has value, checked, 
-////            // Example -
-//             array(
-//             "input" => "radio",
-//             "name" => "Name of radio button group",
-//             "buttons" => array (
-//                  "Value one" => array (
-//                              "checked" => true,
-//                              "disabled" => true
-//                                ),
-//                  "Value two" => array (
-//                              "checked" => false,
-//                              "disabled" => false
-//                                )
-//                          )
-//             ),
-            array (
-                "input" => "radio",
-                "name" => "radio button group",
-                "buttons" => array (
-                    "one" => array (
-                        "checked" => true,
-                        "disabled" => true
-                    ),
-                    "two" => array (
-                        "checked" => false,
-                        "disabled" => false
-                    ),
-                    "three" => array (),
-                    "four" => array (),
-                    "five" => array (
-                        "checked" => true,
-                        "disabled" => false
-                    )
-                )
-            ),
-////            // Hidden input
-            array (
-                "input" => "hidden",
-                "name" => "Hidden Input",
-                "id" => "HiddenInputId",
-                "value" => "Hidden input value"
-            ),
-////            array (
-////                "input" => "text",
-////                "readonly" => true
-////            )
-//                // Text input three
-////            array (
-////                "type" => "text",
-////                "label_text" => "Label text for text input three",
-////                "placeholder" => "Text box three placeholder text"
-////            ),
-//                // Email input
-////            array (
-////                "type" => "email",
-////                "name" => "email_one"
-////            )
-//                // Radio group
-//                // Submit button
-////            array (
-////                "type" => "submit",
 ////                "name" => "submit"
-////            )
+            ),
+            array (
+                "input" => "url",
+                "placeholder" => "Enter url",
+                "label" => "URL goes here"
+            )
         );
 
         $new_form = new Form( $form, $fields );
