@@ -62,29 +62,29 @@
                 "input" => "submit",
 ////                "name" => "submit"
             ),
-//            array (
-//                "input" => "url",
-//                "placeholder" => "Enter url",
-//                "label" => "URL goes here"
-//            ),
-//            array (
-//                "input" => "select",
-//                "options" => array(
-//                    array(
-//                        "text" => "Option one text",
-//                        "value" => "1"
-//                    ),
-//                    array(
-//                        "text" => "Option two text",
-//                        "value" => "2",
-//                        "selected" => true
-//                    ),
-//                    array(
-//                        "text" => "Option three text",
-//                        "value" => "3"
-//                    )
-//                )
-//            )
+            array (
+                "input" => "url",
+                "placeholder" => "Enter url",
+                "label" => "URL goes here"
+            ),
+            array (
+                "input" => "select",
+                "options" => array(
+                    array(
+                        "text" => "Option one text",
+                        "value" => "1"
+                    ),
+                    array(
+                        "text" => "Option two text",
+                        "value" => "2",
+                        "selected" => true
+                    ),
+                    array(
+                        "text" => "Option three text",
+                        "value" => "3"
+                    )
+                )
+            )
         );
 
         $new_form = new Form( $form, $fields );

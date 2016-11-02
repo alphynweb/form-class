@@ -20,6 +20,7 @@ class Form
     // Constructor
     public function __construct( $form_args, $field_args ) {
 
+        // Form
         $this->set_element( $form_args );
 
         $this->update_html( '<form' );
@@ -34,6 +35,7 @@ class Form
 
         $this->update_html( ' />' );
 
+        // Fields
         foreach ( $field_args as $element ) {
 
             $this->set_element( $element );
@@ -43,8 +45,9 @@ class Form
 
             // Establish input type
             $this->input_type( $element );
-
         }
+
+        // Form error message
         $this->formErrorMessage( $form_args );
 
         $this->update_html( '</form>' );
@@ -424,7 +427,8 @@ class Form
             );
 
             foreach ( $options as $option ) {
-                //$this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+
+                $this->set_element( $option );
 
                 $text = isset( $option[ 'text' ] ) ? $option[ 'text' ] : null;
 
@@ -601,13 +605,11 @@ class Form
     }
 
     private function attribute_selected( $element ) {
-        // If no value passed through for selected then get it from the field
-        if ( !$selected ) {
-            $selected = isset( $element[ 'selected' ] ) ? $element[ 'selected' ] : false;
-        }
+
+        $selected = isset( $element[ 'selected' ] ) ? $element[ 'selected' ] : false;
 
         if ( $selected ) {
-            $this->update_html( ' selected="selected' );
+            $this->update_html( ' selected' );
         }
     }
 
