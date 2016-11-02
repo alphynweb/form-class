@@ -34,7 +34,7 @@ class Form
 
         $this->formMethod();
 
-        $this->formAction();
+        $this->attribute_action();
 
         $this->formEnctype();
 
@@ -109,7 +109,7 @@ class Form
         $this->update_html( ' method="' . $form_method . '"' );
     }
 
-    private function formAction() {
+    private function attribute_action() {
         $form = $this->get_form();
 
         $querystring = isset( $form[ 'querystring' ] ) ? "?" . $form[ 'querystring' ] : null;
@@ -166,19 +166,19 @@ class Form
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
-    private function field_attributes() {
+    private function add_attributes() {
         $field = $this->get_field();
         $input_type = isset( $field[ 'input' ] ) ? $field[ 'input' ] : null;
 
         // Names and IDs are allowed for all fields
         // Name
-        $this->field_name();
+        $this->attribute_name();
 
         // Id
-        $this->field_id();
+        $this->attribute_id();
 
         // Class
-        $this->field_class();
+        $this->attribute_class();
 
         // Checked
         $checked_allowed = array (
@@ -186,7 +186,7 @@ class Form
         );
 
         if ( in_array( $input_type, $checked_allowed ) ) {
-            $this->field_checked( $field );
+            $this->attribute_checked( $field );
         }
 
         // Disabled
@@ -202,7 +202,7 @@ class Form
         );
 
         if ( in_array( $input_type, $disabled_allowed ) ) {
-            $this->field_disabled( $field );
+            $this->attribute_disabled( $field );
         }
 
         // For
@@ -211,7 +211,7 @@ class Form
         );
 
         if ( in_array( $input_type, $for_allowed ) ) {
-            $this->field_for();
+            $this->attribute_for();
         }
 
         // Href
@@ -220,7 +220,7 @@ class Form
         );
 
         if ( in_array( $input_type, $href_allowed ) ) {
-            $this->field_href();
+            $this->attribute_href();
         }
 
         // Placeholder
@@ -234,7 +234,7 @@ class Form
         );
 
         if ( in_array( $input_type, $placeholder_allowed ) ) {
-            $this->field_placeholder();
+            $this->attribute_placeholder();
         }
 
         // Readonly
@@ -242,7 +242,7 @@ class Form
                 );
 
         if ( in_array( $input_type, $readonly_allowed ) ) {
-            $this->field_readonly();
+            $this->attribute_readonly();
         }
 
         // Text
@@ -251,7 +251,7 @@ class Form
 //        );
 //
 //        if ( in_array( $input_type, $text_allowed ) ) {
-//            $this->field_text();
+//            $this->attribute_text();
 //        }
         // Value
         $value_allowed = array (
@@ -267,7 +267,7 @@ class Form
         );
 
         if ( in_array( $input_type, $value_allowed ) ) {
-            $this->field_value();
+            $this->attribute_value();
         }
     }
 
@@ -355,11 +355,11 @@ class Form
         // Html
         $this->update_html( '<label' );
 
-        $this->field_for( $field[ 'label' ] );
+        $this->attribute_for( $field[ 'label' ] );
 
         $this->update_html( '>' );
 
-        $this->field_text( $field[ 'label' ] );
+        $this->attribute_text( $field[ 'label' ] );
 
         $this->update_html( '</label>' );
     }
@@ -373,7 +373,7 @@ class Form
         $this->update_html( '<input type="text"' );
 
         // Add attributes
-        $this->field_attributes();
+        $this->add_attributes();
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -386,7 +386,7 @@ class Form
         $this->update_html( '<input type="email"' );
 
         // Add attributes
-        $this->field_attributes();
+        $this->add_attributes();
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -398,7 +398,7 @@ class Form
         // Html
         $this->update_html( '<input type="password"' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( ' />' );
     }
@@ -409,7 +409,7 @@ class Form
 
         $this->update_html( '<input type="file"' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
     }
@@ -420,11 +420,11 @@ class Form
 
         $this->update_html( '<textarea' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</textarea>' );
     }
@@ -439,11 +439,11 @@ class Form
         // Html
         $this->update_html( '<button type="button"' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</button>' );
     }
@@ -462,7 +462,7 @@ class Form
         foreach ( $buttons as $button ) {
             $this->update_html( '<input type="radio"' );
 
-            $this->field_attributes();
+            $this->add_attributes();
 
             $this->update_html( ' />' );
         }
@@ -475,7 +475,7 @@ class Form
         // Html
         $this->update_html( '<select' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
 
@@ -498,11 +498,11 @@ class Form
         // Html
         $this->update_html( '<input type="submit"' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</submit>' );
     }
@@ -526,11 +526,11 @@ class Form
         // Html
         $this->update_html( '<a' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</a>' );
     }
@@ -539,16 +539,16 @@ class Form
         // Html
         $this->update_html( '<input type="hidden"' );
 
-        $this->field_name();
+        $this->attribute_name();
 
-        $this->field_id();
+        $this->attribute_id();
 
-        $this->field_value();
+        $this->attribute_value();
 
         $this->update_html( '/>' );
     }
 
-    private function field_type() {
+    private function attribute_type() {
         $field = $this->get_field();
 
         // Set field type or null if not supplied
@@ -561,7 +561,7 @@ class Form
     }
 
     // Generate field name
-    private function field_name() {
+    private function attribute_name() {
         $field = $this->get_field();
 
         // Set field name or null if not supplied
@@ -574,7 +574,7 @@ class Form
     }
 
     // Generate field id
-    private function field_id() {
+    private function attribute_id() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -587,7 +587,7 @@ class Form
     }
 
     // Generate field value
-    private function field_value() {
+    private function attribute_value() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -600,7 +600,7 @@ class Form
     }
 
     // Generate fiedl placeholder
-    private function field_placeholder() {
+    private function attribute_placeholder() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -613,7 +613,7 @@ class Form
     }
 
     // Generate field text
-    private function field_text( $text = null ) {
+    private function attribute_text( $text = null ) {
         $field = $this->get_field();
 
         // Text is supplied text, or if not supplied it looks for text value on field array
@@ -629,19 +629,19 @@ class Form
     }
 
     // Generate field for
-    private function field_for() {
+    private function attribute_for() {
         $field = $this->get_field();
 
         // Set field for to equal id or null if field does not have id
-        $field_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+        $attribute_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
 
-        if ( !empty( $field_for ) ) {
-            $html = ' for="' . $field_for . '"';
+        if ( !empty( $attribute_for ) ) {
+            $html = ' for="' . $attribute_for . '"';
             $this->update_html( $html );
         }
     }
 
-    private function field_checked( $field ) {
+    private function attribute_checked( $field ) {
         $checked = isset( $field[ 'checked' ] ) ? $field[ 'checked' ] : false;
 
         if ( $checked ) {
@@ -649,7 +649,7 @@ class Form
         }
     }
 
-    private function field_disabled( $field ) {
+    private function attribute_disabled( $field ) {
         $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
 
         if ( $disabled ) {
@@ -657,7 +657,7 @@ class Form
         }
     }
 
-    private function field_href() {
+    private function attribute_href() {
         $field = $this->get_field();
 
         $href = isset( $field[ 'href' ] ) ? $field[ 'href' ] : false;
@@ -667,7 +667,7 @@ class Form
         }
     }
 
-    private function field_class() {
+    private function attribute_class() {
         $field = $this->get_field();
 
         $class = isset( $field[ 'class' ] ) ? $field[ 'class' ] : false;
@@ -677,7 +677,7 @@ class Form
         }
     }
 
-    private function field_readonly() {
+    private function attribute_readonly() {
         $field = $this->get_field();
 
         if ( !isset( $field[ 'readonly' ] ) ) {

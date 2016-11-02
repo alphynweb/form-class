@@ -24,23 +24,32 @@ class Form
 
         $this->update_html( '<form' );
 
-        if ( isset( $form_object[ 'id' ] ) ) {
-            $this->formId();
-        }
+        $attributes = array (
+            "action",
+            "enctype",
+            "method",
+            "querystring"
+        );
 
-        if ( isset( $form_object[ 'name' ] ) ) {
-            $this->formName();
-        }
+        $this->add_attributes( $attributes );
 
-        $this->formMethod();
-
-        $this->formAction();
-
-        $this->formEnctype();
+//        if ( isset( $form_object[ 'id' ] ) ) {
+//            $this->attribute_id();
+//        }
+//
+//        if ( isset( $form_object[ 'name' ] ) ) {
+//            $this->attribute_name();
+//        }
+//
+//        $this->attribute_method();
+//
+//        $this->attribute_action();
+//
+//        $this->attribute_enctype();
 
         $this->update_html( ' />' );
 
-        $this->formMessage();
+        //$this->attribute_message();
 
         $this->set_fields( $fields_object );
 
@@ -64,34 +73,12 @@ class Form
     }
 
     // Render form
-    public function renderForm() {
+    public function render_form() {
         echo $this->get_html();
     }
 
-    // Form Id
-    private function formId() {
-        $form = $this->get_form();
-
-        if ( !isset( $form[ 'id' ] ) ) {
-            return false;
-        }
-
-        $this->update_html( ' id="' . $form[ 'id' ] . '"' );
-    }
-
-    // Form name
-    private function formName() {
-        $form = $this->get_form();
-
-        if ( !isset( $form[ 'name' ] ) ) {
-            return false;
-        }
-
-        $this->update_html( ' name="' . $form[ 'name' ] . '"' );
-    }
-
     // Form method
-    private function formMethod() {
+    private function attribute_method() {
         $form = $this->get_form();
 
         if ( !isset( $form[ 'method' ] ) ) {
@@ -109,7 +96,7 @@ class Form
         $this->update_html( ' method="' . $form_method . '"' );
     }
 
-    private function formAction() {
+    private function attribute_action() {
         $form = $this->get_form();
 
         $querystring = isset( $form[ 'querystring' ] ) ? "?" . $form[ 'querystring' ] : null;
@@ -131,7 +118,15 @@ class Form
         $this->update_html( ' action="' . $form_action . $querystring . '"' );
     }
 
-    private function formEnctype() {
+    private function attribute_querystring() {
+        $querystring = isset( $element[ 'querystring' ] ) ? "?" . $element[ 'querystring' ] : null;
+
+        if ( $querystring ) {
+            $this->update_html( '?' . $querystring );
+        }
+    }
+
+    private function attribute_enctype() {
         $form = $this->get_form();
 
         if ( !isset( $form[ 'enctype' ] ) ) {
@@ -141,7 +136,7 @@ class Form
         $this->update_html( ' enctype="' . $form[ 'enctype' ] . '"' );
     }
 
-    private function formMessage() {
+    private function attribute_message() {
         $form = $this->get_form();
 
         if ( !isset( $form[ 'message' ] ) ) {
@@ -166,22 +161,19 @@ class Form
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
-    private function field_attributes( array $attributes = null ) {
-        $field = $this->get_field();
-        $input_type = isset( $field[ 'input' ] ) ? $field[ 'input' ] : null;
-
+    private function add_attributes( array $attributes = null ) {
         // Name
-        $this->field_name();
+        $this->attribute_name();
 
         // Id
-        $this->field_id();
+        $this->attribute_id();
 
         // Class
-        $this->field_class();
+        $this->attribute_class();
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
-                $func_name = "field_" . $attribute;
+                $func_name = "attribute_" . $attribute;
                 $this->$func_name();
             }
         }
@@ -274,11 +266,11 @@ class Form
         // Html
         $this->update_html( '<label' );
 
-        $this->field_for( $field[ 'label' ] );
+        $this->attribute_for( $field[ 'label' ] );
 
         $this->update_html( '>' );
 
-        $this->field_text( $field[ 'label' ] );
+        $this->attribute_text( $field[ 'label' ] );
 
         $this->update_html( '</label>' );
     }
@@ -296,7 +288,7 @@ class Form
         $this->update_html( '<input type="text"' );
 
         // Add attributes
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -315,7 +307,7 @@ class Form
         $this->update_html( '<input type="email"' );
 
         // Add attributes
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -333,7 +325,7 @@ class Form
         $this->update_html( '<input type="url"' );
 
         // Add attributes
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -351,7 +343,7 @@ class Form
         // Html
         $this->update_html( '<input type="password"' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( ' />' );
     }
@@ -362,7 +354,7 @@ class Form
 
         $this->update_html( '<input type="file"' );
 
-        $this->field_attributes();
+        $this->add_attributes();
 
         $this->update_html( '>' );
     }
@@ -374,11 +366,11 @@ class Form
 
         $this->update_html( '<textarea' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</textarea>' );
     }
@@ -393,11 +385,11 @@ class Form
         // Html
         $this->update_html( '<button type="button"' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</button>' );
     }
@@ -416,7 +408,7 @@ class Form
         foreach ( $buttons as $button ) {
             $this->update_html( '<input type="radio"' );
 
-            $this->field_attributes();
+            $this->add_attributes();
 
             $this->update_html( ' />' );
         }
@@ -440,14 +432,37 @@ class Form
         // Html
         $this->update_html( '<select' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
 
 
+//        if ( $options ) {
+//            foreach ( $options as $key => $value ) {
+//                $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+//            }
+//        }
+
         if ( $options ) {
-            foreach ( $options as $key => $value ) {
-                $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+            $attributes = array (
+                "value",
+                "selected"
+            );
+
+            foreach ( $options as $option ) {
+                //$this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
+
+                $text = isset( $option[ 'text' ] ) ? $option[ 'text' ] : null;
+
+                $this->update_html( '<option' );
+
+                $this->add_attributes( $attributes );
+
+                $this->update_html( '>' );
+
+                $this->attribute_text( $text );
+
+                $this->update_html( '</option>' );
             }
         }
 
@@ -464,11 +479,11 @@ class Form
         // Html
         $this->update_html( '<input type="submit"' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</submit>' );
     }
@@ -496,11 +511,11 @@ class Form
         // Html
         $this->update_html( '<a' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
 
-        $this->field_text();
+        $this->attribute_text();
 
         $this->update_html( '</a>' );
     }
@@ -513,12 +528,12 @@ class Form
         // Html
         $this->update_html( '<input type="hidden"' );
 
-        $this->field_attributes( $attributes );
+        $this->add_attributes( $attributes );
 
         $this->update_html( '/>' );
     }
 
-    private function field_type() {
+    private function attribute_type() {
         $field = $this->get_field();
 
         // Set field type or null if not supplied
@@ -531,7 +546,7 @@ class Form
     }
 
     // Generate field name
-    private function field_name() {
+    private function attribute_name() {
         $field = $this->get_field();
 
         // Set field name or null if not supplied
@@ -544,7 +559,7 @@ class Form
     }
 
     // Generate field id
-    private function field_id() {
+    private function attribute_id() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -557,7 +572,7 @@ class Form
     }
 
     // Generate field value
-    private function field_value() {
+    private function attribute_value() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -570,7 +585,7 @@ class Form
     }
 
     // Generate fiedl placeholder
-    private function field_placeholder() {
+    private function attribute_placeholder() {
         $field = $this->get_field();
 
         // Set field id or null if not supplied
@@ -583,7 +598,7 @@ class Form
     }
 
     // Generate field text
-    private function field_text( $text = null ) {
+    private function attribute_text( $text = null ) {
         $field = $this->get_field();
 
         // Text is supplied text, or if not supplied it looks for text value on field array
@@ -599,19 +614,19 @@ class Form
     }
 
     // Generate field for
-    private function field_for() {
+    private function attribute_for() {
         $field = $this->get_field();
 
         // Set field for to equal id or null if field does not have id
-        $field_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+        $attribute_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
 
-        if ( !empty( $field_for ) ) {
-            $html = ' for="' . $field_for . '"';
+        if ( !empty( $attribute_for ) ) {
+            $html = ' for="' . $attribute_for . '"';
             $this->update_html( $html );
         }
     }
 
-    private function field_checked( $field ) {
+    private function attribute_checked( $field ) {
         $checked = isset( $field[ 'checked' ] ) ? $field[ 'checked' ] : false;
 
         if ( $checked ) {
@@ -619,7 +634,7 @@ class Form
         }
     }
 
-    private function field_disabled() {
+    private function attribute_disabled() {
         $field = $this->get_field();
 
         $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
@@ -629,7 +644,19 @@ class Form
         }
     }
 
-    private function field_href() {
+    private function attribute_selected( $selected = null ) {
+        // If no value passed through for selected then get it from the field
+        if ( !$selected ) {
+            $field = $this->get_field();
+            $selected = isset( $field[ 'selected' ] ) ? $field[ 'selected' ] : false;
+        }
+
+        if ( $selected ) {
+            $this->update_html( ' selected="selected' );
+        }
+    }
+
+    private function attribute_href() {
         $field = $this->get_field();
 
         $href = isset( $field[ 'href' ] ) ? $field[ 'href' ] : false;
@@ -639,7 +666,7 @@ class Form
         }
     }
 
-    private function field_class() {
+    private function attribute_class() {
         $field = $this->get_field();
 
         $class = isset( $field[ 'class' ] ) ? $field[ 'class' ] : false;
@@ -649,7 +676,7 @@ class Form
         }
     }
 
-    private function field_readonly() {
+    private function attribute_readonly() {
         $field = $this->get_field();
 
         if ( !isset( $field[ 'readonly' ] ) ) {

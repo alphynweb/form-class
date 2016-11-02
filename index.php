@@ -34,7 +34,7 @@
             // Text input one
             array (
                 "input" => "text",
-                "name" => "text_field_one",
+                "name" => "text_attribute_one",
                 "id" => "textFieldOne",
                 "value" => "Text box one value",
                 "label" => "Text box one label",
@@ -66,11 +66,29 @@
                 "input" => "url",
                 "placeholder" => "Enter url",
                 "label" => "URL goes here"
+            ),
+            array (
+                "input" => "select",
+                "options" => array(
+                    array(
+                        "text" => "Option one text",
+                        "value" => "1"
+                    ),
+                    array(
+                        "text" => "Option two text",
+                        "value" => "2",
+                        "selected" => true
+                    ),
+                    array(
+                        "text" => "Option three text",
+                        "value" => "3"
+                    )
+                )
             )
         );
 
         $new_form = new Form( $form, $fields );
-        $new_form->renderForm();
+        $new_form->render_form();
         ?>
     </body>
 </html>
