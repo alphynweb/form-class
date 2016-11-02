@@ -31,7 +31,7 @@
                 "name" => "file_input",
                 "id" => "file_input"
             ),
-            // Text input one
+//            // Text input one
             array (
                 "input" => "text",
                 "name" => "text_attribute_one",
@@ -40,13 +40,13 @@
                 "label" => "Text box one label",
                 "placeholder" => "Text box placeholder"
             ),
-//            // Text input two
+////            // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
                 "placeholder" => "Please enter your email here"
             ),
-////            // Password input
+//////            // Password input
             array (
                 "input" => "password",
                 "name" => "password",
@@ -62,29 +62,29 @@
                 "input" => "submit",
 ////                "name" => "submit"
             ),
-            array (
-                "input" => "url",
-                "placeholder" => "Enter url",
-                "label" => "URL goes here"
-            ),
-            array (
-                "input" => "select",
-                "options" => array(
-                    array(
-                        "text" => "Option one text",
-                        "value" => "1"
-                    ),
-                    array(
-                        "text" => "Option two text",
-                        "value" => "2",
-                        "selected" => true
-                    ),
-                    array(
-                        "text" => "Option three text",
-                        "value" => "3"
-                    )
-                )
-            )
+//            array (
+//                "input" => "url",
+//                "placeholder" => "Enter url",
+//                "label" => "URL goes here"
+//            ),
+//            array (
+//                "input" => "select",
+//                "options" => array(
+//                    array(
+//                        "text" => "Option one text",
+//                        "value" => "1"
+//                    ),
+//                    array(
+//                        "text" => "Option two text",
+//                        "value" => "2",
+//                        "selected" => true
+//                    ),
+//                    array(
+//                        "text" => "Option three text",
+//                        "value" => "3"
+//                    )
+//                )
+//            )
         );
 
         $new_form = new Form( $form, $fields );
