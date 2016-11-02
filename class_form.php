@@ -18,9 +18,9 @@ class Form
     private $html;
 
     // Constructor
-    public function __construct( $form_object, $fields_object ) {
+    public function __construct( $form_args, $field_args ) {
 
-        $this->set_element( $form_object );
+        $this->set_element( $form_args );
 
         $this->update_html( '<form' );
 
@@ -34,7 +34,7 @@ class Form
 
         $this->update_html( ' />' );
 
-        foreach ( $fields_object as $element ) {
+        foreach ( $field_args as $element ) {
 
             $this->set_element( $element );
 
@@ -45,7 +45,7 @@ class Form
             $this->input_type( $element );
 
         }
-        $this->formErrorMessage( $form_object );
+        $this->formErrorMessage( $form_args );
 
         $this->update_html( '</form>' );
     }
