@@ -5,6 +5,13 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            form input {
+                display: block;
+                margin-bottom: 2rem;
+            }
+        </style>
     </head>
     <body>
         <?php
@@ -19,140 +26,86 @@
         );
         $fields = array (
             // File
-            array(
+            array (
                 "input" => "file",
                 "name" => "file_input",
                 "id" => "file_input"
             ),
-            // Text input one
+//            // Text input one
             array (
                 "input" => "text",
-                "name" => "text_field_one",
+                "name" => "text_attribute_one",
                 "id" => "textFieldOne",
                 "value" => "Text box one value",
                 "label" => "Text box one label",
                 "placeholder" => "Text box placeholder"
             ),
-            // Text input two
+////            // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
                 "placeholder" => "Please enter your email here"
             ),
-            // Password input
+//////            // Password input
             array (
                 "input" => "password",
-                "name" => "password"
+                "name" => "password",
+                "placeholder" => "Enter your password here"
             ),
-            // Textarea
+////            // Textarea
             array (
                 "input" => "textarea",
                 "text" => "Test text for textarea"
             ),
-            // Button
-            array (
-                "input" => "button",
-                "id" => "button_one_id",
-                "value" => "button one value",
-                "text" => "button one text"
-            ),
-            // Submit button
-            array (
-                "input" => "button",
-                "type" => "submit",
-                "label" => "Submit button label text",
-                "value" => "submit button value"
-            ),
-            // Submit button updated
+////            // Button
             array (
                 "input" => "submit",
-                "label" => "Submit button 2 label text",
-                "value" => "submit button value"
+////                "name" => "submit"
             ),
             array (
-                "input" => "link",
-                "text" => "Forgot your password?",
-                "href" => "http://www.google.com",
-                "class" => "button"
+                "input" => "url",
+                "placeholder" => "Enter url",
+                "label" => "URL goes here"
             ),
             array (
                 "input" => "select",
                 "options" => array (
-                    "Option one text" => "1",
-                    "Option two text" => "2",
-                    "Option three text" => "Value for option three"
-                ),
-                "label" => ""
-            ),
-            // Radio button group
-            // Name = name of radio button group
-            // Buttons = array of buttons. Each button has value, checked, 
-            // Example -
-            // array(
-            // "input" => "radio",
-            // "name" => "Name of radio button group",
-            // "buttons" => array (
-            //      "Value one" => array (
-            //                  "checked" => true,
-            //                  "disabled" => true
-            //                    ),
-            //      "Value two" => array (
-            //                  "checked" => false,
-            //                  "disabled" => false
-            //                    )
-            //              )
-            // )
-            array (
-                "input" => "radio",
-                "name" => "radio button group",
-                "buttons" => array (
-                    "one" => array (
-                        "checked" => true,
-                        "disabled" => true
+                    array (
+                        "text" => "Option one text",
+                        "value" => "1"
                     ),
-                    "two" => array (
-                        "checked" => false,
-                        "disabled" => false
+                    array (
+                        "text" => "Option two text",
+                        "value" => "2",
+                        "selected" => true
                     ),
-                    "three" => array (),
-                    "four" => array (),
-                    "five" => array (
-                        "checked" => true,
-                        "disabled" => false
+                    array (
+                        "text" => "Option three text",
+                        "value" => "3"
                     )
                 )
             ),
-            // Hidden input
             array (
-                "input" => "hidden",
-                "name" => "Hidden Input",
-                "id" => "HiddenInputId"
-            ),
-            array (
-                "input" => "text",
-                "readonly" => true
+                "input" => "radio",
+                "buttons" => array (
+                    array (
+                        "name" => "Radio group one",
+                        "value" => "Radio button one"
+                    ),
+                    array (
+                        "name" => "Radio group one",
+                        "value" => "Radio button two"
+                    ),
+                    array (
+                        "name" => "radio group one",
+                        "value" => "Radio button three"
+                    )
+                )
             )
-                // Text input three
-//            array (
-//                "type" => "text",
-//                "label_text" => "Label text for text input three",
-//                "placeholder" => "Text box three placeholder text"
-//            ),
-                // Email input
-//            array (
-//                "type" => "email",
-//                "name" => "email_one"
-//            )
-                // Radio group
-                // Submit button
-//            array (
-//                "type" => "submit",
-//                "name" => "submit"
-//            )
         );
 
         $new_form = new Form( $form, $fields );
-        $new_form->renderForm();
+        $new_form->render_form();
         ?>
     </body>
 </html>
