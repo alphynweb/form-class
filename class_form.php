@@ -14,7 +14,7 @@ class Form
     // Object with info about form fields
     private $form;
     private $fields;
-    private $field;
+    private $element;
     private $html;
 
     // Constructor
@@ -33,41 +33,23 @@ class Form
 
         $this->add_attributes( $attributes );
 
-//        if ( isset( $form_object[ 'id' ] ) ) {
-//            $this->attribute_id();
-//        }
-//
-//        if ( isset( $form_object[ 'name' ] ) ) {
-//            $this->attribute_name();
-//        }
-//
-//        $this->attribute_method();
-//
-//        $this->attribute_action();
-//
-//        $this->attribute_enctype();
-
         $this->update_html( ' />' );
 
-        //$this->attribute_message();
-
-        $this->set_fields( $fields_object );
-
-        foreach ( $fields_object as $field ) {
+        foreach ( $fields_object as $element ) {
 
             // If the field 
-            $this->set_field( $field );
+            $this->set_element( $element );
 
             // Create label
-            $this->label();
+            $this->label( $element );
 
             // Establish input type
-            $this->input_type();
+            $this->input_type( $element );
 
-            $this->set_html( $this->get_html() );
+            //$this->set_html( $this->get_html( $element ) );
         }
 
-        $this->formErrorMessage();
+        $this->formErrorMessage( $element );
 
         $this->update_html( '</form>' );
     }
@@ -78,16 +60,16 @@ class Form
     }
 
     // Form method
-    private function attribute_method() {
-        $form = $this->get_form();
+    private function attribute_method( $element ) {
+        $form = $this->get_form( $element );
 
-        if ( !isset( $form[ 'method' ] ) ) {
+        if ( !isset( $element[ 'method' ] ) ) {
             // Default to get if no method supplied
             $this->update_html( ' method="get"' );
             return true;
         }
 
-        $form_method = strtolower( $form[ 'method' ] );
+        $form_method = strtolower( $element[ 'method' ] );
 
         if ( $form_method != "post" && $form_method != "get" ) {
             return false;
@@ -96,18 +78,18 @@ class Form
         $this->update_html( ' method="' . $form_method . '"' );
     }
 
-    private function attribute_action() {
-        $form = $this->get_form();
+    private function attribute_action( $element ) {
+        $form = $this->get_form( $element );
 
-        $querystring = isset( $form[ 'querystring' ] ) ? "?" . $form[ 'querystring' ] : null;
+        $querystring = isset( $element[ 'querystring' ] ) ? "?" . $element[ 'querystring' ] : null;
 
         // If no form action supplied, default to _self.
-        if ( !isset( $form[ 'action' ] ) ) {
+        if ( !isset( $element[ 'action' ] ) ) {
             $this->update_html( ' action="' . htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) . $querystring . '"' );
             return true;
         }
 
-        $form_action = $form[ 'action' ];
+        $form_action = $element[ 'action' ];
 
         // self or empty = _self
         if ( strtolower( $form_action ) == "self" || $form_action == "" ) {
@@ -118,7 +100,7 @@ class Form
         $this->update_html( ' action="' . $form_action . $querystring . '"' );
     }
 
-    private function attribute_querystring() {
+    private function attribute_querystring( $element ) {
         $querystring = isset( $element[ 'querystring' ] ) ? "?" . $element[ 'querystring' ] : null;
 
         if ( $querystring ) {
@@ -126,118 +108,118 @@ class Form
         }
     }
 
-    private function attribute_enctype() {
-        $form = $this->get_form();
+    private function attribute_enctype( $element ) {
+        $form = $this->get_form( $element );
 
-        if ( !isset( $form[ 'enctype' ] ) ) {
+        if ( !isset( $element[ 'enctype' ] ) ) {
             return false;
         }
 
-        $this->update_html( ' enctype="' . $form[ 'enctype' ] . '"' );
+        $this->update_html( ' enctype="' . $element[ 'enctype' ] . '"' );
     }
 
-    private function attribute_message() {
-        $form = $this->get_form();
+    private function attribute_message( $element ) {
+        $form = $this->get_form( $element );
 
-        if ( !isset( $form[ 'message' ] ) ) {
+        if ( !isset( $element[ 'message' ] ) ) {
             return false;
         }
 
-        $form_message = $form[ 'message' ];
+        $form_message = $element[ 'message' ];
 
         $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
-    private function formErrorMessage() {
-        $form = $this->get_form();
+    private function formErrorMessage( $element ) {
+        $form = $this->get_form( $element );
 
-        if ( !isset( $form[ 'error' ] ) ) {
+        if ( !isset( $element[ 'error' ] ) ) {
             return false;
         }
 
-        $error_message = $form[ 'error' ];
+        $error_message = $element[ 'error' ];
 
         $this->update_html( '<div class="error-message">' . $error_message . '</div>' );
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
     private function add_attributes( array $attributes = null ) {
+        $element = $this->get_element();
         // Name
-        $this->attribute_name();
+        $this->attribute_name( $element );
 
         // Id
-        $this->attribute_id();
+        $this->attribute_id( $element );
 
         // Class
-        $this->attribute_class();
+        $this->attribute_class( $element );
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
                 $func_name = "attribute_" . $attribute;
-                $this->$func_name();
+                $this->$func_name( $element );
             }
         }
     }
 
     // Input type
-    private function input_type() {
-        $field = $this->get_field();
-        $input = $field[ 'input' ];
+    private function input_type( $element ) {
+        $input = $element[ 'input' ];
 
         // Create field
         switch ( $input ) {
             // Text input
             case "text":
-                $this->text_input();
+                $this->text_input( $element );
                 break;
             // Email input
             case "email":
-                $this->email_input();
+                $this->email_input( $element );
                 break;
             case "textarea":
-                $this->textarea();
+                $this->textarea( $element );
                 break;
             case "radio":
-                $this->radio_group();
+                $this->radio_group( $element );
                 break;
             case "select":
-                $this->select_dropdown();
+                $this->select_dropdown( $element );
                 break;
             case "button":
                 // If type of input is set
-                If ( isset( $field[ 'type' ] ) ) {
-                    switch ( $field[ 'type' ] ) {
+                If ( isset( $element[ 'type' ] ) ) {
+                    switch ( $element[ 'type' ] ) {
                         // Submit button
                         case "submit":
-                            $this->submit_button();
+                            $this->submit_button( $element );
                             break;
                         // Default button
                         default:
-                            $this->button();
+                            $this->button( $element );
                             break;
                     }
                     // If type of input is not set
                 } else {
-                    $this->button();
+                    $this->button( $element );
                 }
                 break;
             case "submit":
-                $this->submit_button();
+                $this->submit_button( $element );
                 break;
             case "password":
-                $this->password_input();
+                $this->password_input( $element );
                 break;
             case "link":
-                $this->link_input();
+                $this->link_input( $element );
                 break;
             case "hidden":
-                $this->hidden_input();
+                $this->hidden_input( $element );
                 break;
             case "file":
-                $this->file_input();
+                $this->file_input( $element );
                 break;
             case "url":
-                $this->url_input();
+                $this->url_input( $element );
                 break;
             default:
                 break;
@@ -245,38 +227,38 @@ class Form
     }
 
     // Label
-    private function label() {
+    private function label( $element ) {
         // Label will not show if :
         // No label text
         // label = false
         // Label "for" will show if the labelled element has an id
 
-        $field = $this->get_field();
+        $element = $this->get_element( $element );
 
         // If label isn't set then return
-        if ( !isset( $field[ 'label' ] ) ) {
+        if ( !isset( $element[ 'label' ] ) ) {
             return false;
         }
 
         // If label value is set to false or empty then return
-        if ( isset( $field[ 'label' ] ) && ($field[ 'label' ] === false || empty( $field[ 'label' ] )) ) {
+        if ( isset( $element[ 'label' ] ) && ($element[ 'label' ] === false || empty( $element[ 'label' ] )) ) {
             return false;
         }
 
         // Html
         $this->update_html( '<label' );
 
-        $this->attribute_for( $field[ 'label' ] );
+        $this->attribute_for( $element[ 'label' ] );
 
         $this->update_html( '>' );
 
-        $this->attribute_text( $field[ 'label' ] );
+        $this->attribute_text( $element[ 'label' ] );
 
         $this->update_html( '</label>' );
     }
 
     // Text input
-    private function text_input() {
+    private function text_input( $element ) {
 
         $attributes = array (
             "disabled",
@@ -295,7 +277,7 @@ class Form
     }
 
     // Email
-    private function email_input() {
+    private function email_input( $element ) {
 
         $attributes = array (
             "disabled",
@@ -314,7 +296,7 @@ class Form
     }
 
     // Url
-    private function url_input() {
+    private function url_input( $element ) {
         $attributes = array (
             "disabled",
             "value",
@@ -332,7 +314,7 @@ class Form
     }
 
     // Password input
-    private function password_input() {
+    private function password_input( $element ) {
 
         $attributes = array (
             "disabled",
@@ -349,18 +331,21 @@ class Form
     }
 
     // File input
-    private function file_input() {
-        $field = $this->get_field();
+    private function file_input( $element ) {
+        $field = $this->get_element( $element );
+
+        $attributes = array (
+                );
 
         $this->update_html( '<input type="file"' );
 
-        $this->add_attributes();
+        $this->add_attributes( $attributes );
 
         $this->update_html( '>' );
     }
 
     // Textarea
-    private function textarea() {
+    private function textarea( $element ) {
         $attributes = array (
                 );
 
@@ -370,13 +355,13 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->attribute_text();
+        $this->attribute_text( $element );
 
         $this->update_html( '</textarea>' );
     }
 
     // Button
-    private function button() {
+    private function button( $element ) {
 
         $attributes = array (
             "value"
@@ -389,16 +374,16 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->attribute_text();
+        $this->attribute_text( $element );
 
         $this->update_html( '</button>' );
     }
 
     // Radio group 
-    private function radio_group() {
-        $field = $this->get_field();
+    private function radio_group( $element ) {
+        $field = $this->get_element( $element );
 
-        $buttons = isset( $field[ 'buttons' ] ) ? $field[ 'buttons' ] : null;
+        $buttons = isset( $element[ 'buttons' ] ) ? $element[ 'buttons' ] : null;
 
         // If no buttons stated then return without rendering anything
         if ( !$buttons ) {
@@ -408,19 +393,19 @@ class Form
         foreach ( $buttons as $button ) {
             $this->update_html( '<input type="radio"' );
 
-            $this->add_attributes();
+            $this->add_attributes( $element );
 
             $this->update_html( ' />' );
         }
     }
 
     // Select dropdown
-    private function select_dropdown() {
+    private function select_dropdown( $element ) {
 
-        $field = $this->get_field();
+        $field = $this->get_element( $element );
 
         // Get options
-        $options = isset( $field[ 'options' ] ) ? $field[ 'options' ] : null;
+        $options = isset( $element[ 'options' ] ) ? $element[ 'options' ] : null;
 
         if ( !$options ) {
             return false;
@@ -470,7 +455,7 @@ class Form
     }
 
     // Submit button
-    private function submit_button() {
+    private function submit_button( $element ) {
 
         $attributes = array (
             "value"
@@ -483,26 +468,26 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->attribute_text();
+        $this->attribute_text( $element );
 
         $this->update_html( '</submit>' );
     }
 
-    private function link_input() {
-        $field = $this->get_field();
+    private function link_input( $element ) {
+        $field = $this->get_element( $element );
 
         // If no text or href set then return
-        if ( !isset( $field[ 'text' ] ) || !isset( $field[ 'href' ] ) ) {
+        if ( !isset( $element[ 'text' ] ) || !isset( $element[ 'href' ] ) ) {
             return false;
         }
 
         // If text or href are empty then return
-        if ( empty( $field[ 'text' ] ) || empty( $field[ 'href' ] ) ) {
+        if ( empty( $element[ 'text' ] ) || empty( $element[ 'href' ] ) ) {
             return false;
         }
 
-        $text = $field[ 'text' ];
-        $href = $field[ 'href' ];
+        $text = $element[ 'text' ];
+        $href = $element[ 'href' ];
 
         $attributes = array (
             "href"
@@ -515,12 +500,12 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->attribute_text();
+        $this->attribute_text( $element );
 
         $this->update_html( '</a>' );
     }
 
-    private function hidden_input() {
+    private function hidden_input( $element ) {
         $attributes = array (
             "value"
         );
@@ -533,11 +518,11 @@ class Form
         $this->update_html( '/>' );
     }
 
-    private function attribute_type() {
-        $field = $this->get_field();
+    private function attribute_type( $element ) {
+        $field = $this->get_element( $element );
 
         // Set field type or null if not supplied
-        $type = isset( $field[ 'type' ] ) ? $field[ 'type' ] : null;
+        $type = isset( $element[ 'type' ] ) ? $element[ 'type' ] : null;
 
         if ( $type ) {
             $html = ' type="' . $type . '"';
@@ -546,11 +531,11 @@ class Form
     }
 
     // Generate field name
-    private function attribute_name() {
-        $field = $this->get_field();
+    private function attribute_name( $element ) {
+        $field = $this->get_element( $element );
 
         // Set field name or null if not supplied
-        $name = isset( $field[ 'name' ] ) ? $field[ 'name' ] : null;
+        $name = isset( $element[ 'name' ] ) ? $element[ 'name' ] : null;
 
         if ( $name ) {
             $html = ' name="' . $name . '"';
@@ -559,11 +544,11 @@ class Form
     }
 
     // Generate field id
-    private function attribute_id() {
-        $field = $this->get_field();
+    private function attribute_id( $element ) {
+        $field = $this->get_element( $element );
 
         // Set field id or null if not supplied
-        $id = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+        $id = isset( $element[ 'id' ] ) ? $element[ 'id' ] : null;
 
         if ( $id ) {
             $html = ' id="' . $id . '"';
@@ -572,11 +557,11 @@ class Form
     }
 
     // Generate field value
-    private function attribute_value() {
-        $field = $this->get_field();
+    private function attribute_value( $element ) {
+        $field = $this->get_element( $element );
 
         // Set field id or null if not supplied
-        $value = isset( $field[ 'value' ] ) ? $field[ 'value' ] : null;
+        $value = isset( $element[ 'value' ] ) ? $element[ 'value' ] : null;
 
         if ( $value ) {
             $html = ' value="' . $value . '"';
@@ -585,11 +570,9 @@ class Form
     }
 
     // Generate fiedl placeholder
-    private function attribute_placeholder() {
-        $field = $this->get_field();
-
+    private function attribute_placeholder( $element ) {
         // Set field id or null if not supplied
-        $placeholder = isset( $field[ 'placeholder' ] ) ? $field[ 'placeholder' ] : null;
+        $placeholder = isset( $element[ 'placeholder' ] ) ? $element[ 'placeholder' ] : null;
 
         if ( $placeholder ) {
             $html = ' placeholder="' . $placeholder . '"';
@@ -599,12 +582,10 @@ class Form
 
     // Generate field text
     private function attribute_text( $text = null ) {
-        $field = $this->get_field();
-
         // Text is supplied text, or if not supplied it looks for text value on field array
         if ( !$text ) {
             // Set field text or null if not supplied
-            $text = isset( $field[ 'text' ] ) ? $field[ 'text' ] : null;
+            $text = isset( $element[ 'text' ] ) ? $element[ 'text' ] : null;
         }
 
         if ( $text ) {
@@ -614,11 +595,11 @@ class Form
     }
 
     // Generate field for
-    private function attribute_for() {
-        $field = $this->get_field();
+    private function attribute_for( $element ) {
+        $field = $this->get_element( $element );
 
         // Set field for to equal id or null if field does not have id
-        $attribute_for = isset( $field[ 'id' ] ) ? $field[ 'id' ] : null;
+        $attribute_for = isset( $element[ 'id' ] ) ? $element[ 'id' ] : null;
 
         if ( !empty( $attribute_for ) ) {
             $html = ' for="' . $attribute_for . '"';
@@ -627,17 +608,17 @@ class Form
     }
 
     private function attribute_checked( $field ) {
-        $checked = isset( $field[ 'checked' ] ) ? $field[ 'checked' ] : false;
+        $checked = isset( $element[ 'checked' ] ) ? $element[ 'checked' ] : false;
 
         if ( $checked ) {
             $this->update_html( ' checked="checked"' );
         }
     }
 
-    private function attribute_disabled() {
-        $field = $this->get_field();
+    private function attribute_disabled( $element ) {
+        $field = $this->get_element( $element );
 
-        $disabled = isset( $field[ 'disabled' ] ) ? $field[ 'disabled' ] : false;
+        $disabled = isset( $element[ 'disabled' ] ) ? $element[ 'disabled' ] : false;
 
         if ( $disabled ) {
             $this->update_html( ' disabled="disabled"' );
@@ -647,8 +628,8 @@ class Form
     private function attribute_selected( $selected = null ) {
         // If no value passed through for selected then get it from the field
         if ( !$selected ) {
-            $field = $this->get_field();
-            $selected = isset( $field[ 'selected' ] ) ? $field[ 'selected' ] : false;
+            $field = $this->get_element( $element );
+            $selected = isset( $element[ 'selected' ] ) ? $element[ 'selected' ] : false;
         }
 
         if ( $selected ) {
@@ -656,40 +637,41 @@ class Form
         }
     }
 
-    private function attribute_href() {
-        $field = $this->get_field();
+    private function attribute_href( $element ) {
+        $field = $this->get_element( $element );
 
-        $href = isset( $field[ 'href' ] ) ? $field[ 'href' ] : false;
+        $href = isset( $element[ 'href' ] ) ? $element[ 'href' ] : false;
 
         if ( $href ) {
             $this->update_html( ' href="' . $href . '"' );
         }
     }
 
-    private function attribute_class() {
-        $field = $this->get_field();
+    private function attribute_class( $element ) {
+        $field = $this->get_element( $element );
 
-        $class = isset( $field[ 'class' ] ) ? $field[ 'class' ] : false;
+        $class = isset( $element[ 'class' ] ) ? $element[ 'class' ] : false;
 
         if ( $class ) {
             $this->update_html( ' class="' . $class . '"' );
         }
     }
 
-    private function attribute_readonly() {
-        $field = $this->get_field();
+    private function attribute_readonly( $element ) {
+        $field = $this->get_element( $element );
 
-        if ( !isset( $field[ 'readonly' ] ) ) {
+        if ( !isset( $element[ 'readonly' ] ) ) {
             return false;
         }
 
-        if ( $field[ 'readonly' ] == true ) {
+        if ( $element[ 'readonly' ] == true ) {
             $this->update_html( ' readonly="readonly"' );
         }
     }
 
     // Update form html
     private function update_html( $html ) {
+        echo $html;
         $this->set_html( $this->get_html() . $html );
     }
 
@@ -702,20 +684,20 @@ class Form
         $this->form = $form_object;
     }
 
-    private function get_fields() {
+    private function get_elements() {
         return $this->fields;
     }
 
-    private function set_fields( $fields_object ) {
-        $this->fields = $fields_object;
+    private function set_elements( $fields_object ) {
+        $this->elements = $fields_object;
     }
 
-    private function get_field() {
-        return $this->field;
+    private function get_element() {
+        return $this->element;
     }
 
-    private function set_field( $field ) {
-        $this->field = $field;
+    private function set_element( $element ) {
+        $this->element = $element;
     }
 
     public function get_html() {
