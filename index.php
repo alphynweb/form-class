@@ -69,19 +69,36 @@
             ),
             array (
                 "input" => "select",
-                "options" => array(
-                    array(
+                "options" => array (
+                    array (
                         "text" => "Option one text",
                         "value" => "1"
                     ),
-                    array(
+                    array (
                         "text" => "Option two text",
                         "value" => "2",
                         "selected" => true
                     ),
-                    array(
+                    array (
                         "text" => "Option three text",
                         "value" => "3"
+                    )
+                )
+            ),
+            array (
+                "input" => "radio",
+                "buttons" => array (
+                    array (
+                        "name" => "Radio group one",
+                        "value" => "Radio button one"
+                    ),
+                    array (
+                        "name" => "Radio group one",
+                        "value" => "Radio button two"
+                    ),
+                    array (
+                        "name" => "radio group one",
+                        "value" => "Radio button three"
                     )
                 )
             )

@@ -384,10 +384,16 @@ class Form
             return false;
         }
 
+        $attributes = array (
+            "value"
+        );
+
         foreach ( $buttons as $button ) {
+            $this->set_element( $button );
+
             $this->update_html( '<input type="radio"' );
 
-            $this->add_attributes( $element );
+            $this->add_attributes( $attributes );
 
             $this->update_html( ' />' );
         }
