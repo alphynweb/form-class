@@ -64,7 +64,7 @@ class Form
     }
 
     // Render form
-    public function renderForm() {
+    public function render_form() {
         echo $this->get_html();
     }
 

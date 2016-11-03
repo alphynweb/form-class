@@ -62,6 +62,12 @@
                 "input" => "submit",
 ////                "name" => "submit"
             ),
+            // Link
+            array (
+                "input" => "link",
+                "text" => "A link",
+                "href" => "http://www.google.com"
+            ),
             array (
                 "input" => "url",
                 "placeholder" => "Enter url",
