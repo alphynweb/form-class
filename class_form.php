@@ -228,23 +228,21 @@ class Form
         // label = false
         // Label "for" will show if the labelled element has an id
         // If label isn't set then return
-        if ( !isset( $element[ 'label' ] ) ) {
-            return false;
-        }
-
         // If label value is set to false or empty then return
-        if ( isset( $element[ 'label' ] ) && ($element[ 'label' ] === false || empty( $element[ 'label' ] )) ) {
+        $label = isset( $element[ 'label' ] ) ? $element[ 'label' ] : null;
+
+        if ( !$label ) {
             return false;
         }
 
         // Html
         $this->update_html( '<label' );
 
-        $this->attribute_for( $element[ 'label' ] );
+        $this->attribute_for( $element );
 
         $this->update_html( '>' );
 
-        $this->attribute_text( $element[ 'label' ] );
+        $this->update_html( $label );
 
         $this->update_html( '</label>' );
     }
@@ -554,13 +552,13 @@ class Form
 
     // Generate field text
     private function attribute_text( $element ) {
-        
-        $text = isset($element['text']) ? $element['text'] : null;
-        
-        if (!$text) {
+
+        $text = isset( $element[ 'text' ] ) ? $element[ 'text' ] : null;
+
+        if ( !$text ) {
             return false;
         }
-        
+
         $this->update_html( $text );
     }
 
