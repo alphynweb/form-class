@@ -419,13 +419,6 @@ class Form
 
         $this->update_html( '>' );
 
-
-//        if ( $options ) {
-//            foreach ( $options as $key => $value ) {
-//                $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
-//            }
-//        }
-
         if ( $options ) {
             $attributes = array (
                 "value",
@@ -471,19 +464,6 @@ class Form
     }
 
     private function link_input( $element ) {
-
-        // If no text or href set then return
-        if ( !isset( $element[ 'text' ] ) || !isset( $element[ 'href' ] ) ) {
-            return false;
-        }
-
-        // If text or href are empty then return
-        if ( empty( $element[ 'text' ] ) || empty( $element[ 'href' ] ) ) {
-            return false;
-        }
-
-        $text = $element[ 'text' ];
-        $href = $element[ 'href' ];
 
         $attributes = array (
             "href"
@@ -573,11 +553,15 @@ class Form
     }
 
     // Generate field text
-    private function attribute_text( $text = null ) {
-
-        if ( $text ) {
-            $this->update_html( $text );
+    private function attribute_text( $element ) {
+        
+        $text = isset($element['text']) ? $element['text'] : null;
+        
+        if (!$text) {
+            return false;
         }
+        
+        $this->update_html( $text );
     }
 
     // Generate field for
