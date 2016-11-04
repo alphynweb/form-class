@@ -330,7 +330,7 @@ class Form
 
         $attributes = array (
             "required"
-                );
+        );
 
         $this->update_html( '<input type="file"' );
 
@@ -344,7 +344,7 @@ class Form
 
         $attributes = array (
             "required"
-                );
+        );
 
         $this->update_html( '<textarea' );
 

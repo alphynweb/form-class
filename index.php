@@ -62,7 +62,8 @@
 ////            // Textarea
             array (
                 "input" => "textarea",
-                "text" => "Test text for textarea"
+                "text" => "Test text for textarea",
+                "required" => true
             ),
 ////            // Button
             array (
