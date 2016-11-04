@@ -28,7 +28,8 @@ class Form
         $attributes = array (
             "action",
             "enctype",
-            "method"
+            "method",
+            "onsubmit"
         );
 
         $this->add_attributes( $attributes );
@@ -490,6 +491,12 @@ class Form
         $this->add_attributes( $attributes );
 
         $this->update_html( '/>' );
+    }
+
+    private function attribute_onsubmit( $element ) {
+        $onsubmit = isset( $element[ 'onsubmit' ] ) ? $element[ 'onsubmit' ] : null;
+
+        $this->update_html( ' onsubmit="' . $onsubmit . '()"' );
     }
 
     private function attribute_type( $element ) {
