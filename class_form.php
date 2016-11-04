@@ -438,7 +438,7 @@ class Form
 
                 $this->update_html( '>' );
 
-                $this->attribute_text( $text );
+                $this->attribute_text( $option );
 
                 $this->update_html( '</option>' );
             }
