@@ -6,6 +6,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <script>
+            function testFunction() {
+                console.log("Form submitted");
+            }
+        </script>
+
         <style>
             form input {
                 display: block;
@@ -37,9 +43,9 @@
                 "input" => "text",
                 "name" => "text_attribute_one",
                 "id" => "textFieldOne",
-                "value" => "Text box one value",
                 "label" => "Text box one label",
-                "placeholder" => "Text box placeholder"
+                "placeholder" => "Text box placeholder",
+                "required" => true
             ),
 ////            // Text input two
             array (

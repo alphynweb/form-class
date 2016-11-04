@@ -254,7 +254,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Opening HTML
@@ -546,7 +547,7 @@ class Form
         }
     }
 
-    // Generate fiedl placeholder
+    // Generate field placeholder
     private function attribute_placeholder( $element ) {
         // Set field id or null if not supplied
         $placeholder = isset( $element[ 'placeholder' ] ) ? $element[ 'placeholder' ] : null;
@@ -554,6 +555,18 @@ class Form
         if ( $placeholder ) {
             $html = ' placeholder="' . $placeholder . '"';
             $this->update_html( $html );
+        }
+    }
+
+    // Generate "required" attribute
+    private function attribute_required( $element ) {
+
+        if ( !isset( $element[ 'required' ] ) ) {
+            return false;
+        }
+
+        if ( $element[ 'required' ] === true ) {
+            $this->update_html( ' required' );
         }
     }
 
