@@ -274,7 +274,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -292,7 +293,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -311,7 +313,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -326,6 +329,7 @@ class Form
     private function file_input( $element ) {
 
         $attributes = array (
+            "required"
                 );
 
         $this->update_html( '<input type="file"' );
@@ -339,6 +343,7 @@ class Form
     private function textarea( $element ) {
 
         $attributes = array (
+            "required"
                 );
 
         $this->update_html( '<textarea' );
