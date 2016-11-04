@@ -44,7 +44,7 @@
                 "name" => "text_attribute_one",
                 "id" => "textFieldOne",
                 "label" => "Text box one label",
-                "placeholder" => "Text box placeholder",
+                "placeholder" => "Required field",
                 "required" => true
             ),
 ////            // Text input two
@@ -107,7 +107,8 @@
                     ),
                     array (
                         "name" => "Radio group one",
-                        "value" => "Radio button two"
+                        "value" => "Radio button two",
+                        "checked" => true
                     ),
                     array (
                         "name" => "radio group one",

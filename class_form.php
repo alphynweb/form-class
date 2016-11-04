@@ -385,7 +385,8 @@ class Form
         }
 
         $attributes = array (
-            "value"
+            "value",
+            "checked"
         );
 
         foreach ( $buttons as $button ) {
@@ -596,27 +597,33 @@ class Form
 
     private function attribute_checked( $element ) {
 
-        $checked = isset( $element[ 'checked' ] ) ? $element[ 'checked' ] : false;
+        if ( !isset( $element[ 'checked' ] ) ) {
+            return false;
+        }
 
-        if ( $checked ) {
-            $this->update_html( ' checked="checked"' );
+        if ( $element[ 'checked' ] === true ) {
+            $this->update_html( ' checked' );
         }
     }
 
     private function attribute_disabled( $element ) {
 
-        $disabled = isset( $element[ 'disabled' ] ) ? $element[ 'disabled' ] : false;
+        if ( !isset( $element[ 'disabled' ] ) ) {
+            return false;
+        }
 
-        if ( $disabled ) {
-            $this->update_html( ' disabled="disabled"' );
+        if ( $element[ 'disabled' ] === true ) {
+            $this->update_html( ' disabled' );
         }
     }
 
     private function attribute_selected( $element ) {
 
-        $selected = isset( $element[ 'selected' ] ) ? $element[ 'selected' ] : false;
+        if ( !isset( $element[ 'selected' ] ) ) {
+            return false;
+        }
 
-        if ( $selected ) {
+        if ( $element[ 'selected' ] === true ) {
             $this->update_html( ' selected' );
         }
     }
@@ -645,8 +652,8 @@ class Form
             return false;
         }
 
-        if ( $element[ 'readonly' ] == true ) {
-            $this->update_html( ' readonly="readonly"' );
+        if ( $element[ 'readonly' ] === true ) {
+            $this->update_html( ' readonly' );
         }
     }
 
