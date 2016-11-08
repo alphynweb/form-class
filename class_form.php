@@ -36,6 +36,9 @@ class Form
 
         $this->update_html( ' />' );
 
+        // Form message
+        $this->form_message( $form_args );
+
         // Fields
         foreach ( $field_args as $element ) {
 
@@ -136,7 +139,7 @@ class Form
         $this->update_html( ' enctype="' . $element[ 'enctype' ] . '"' );
     }
 
-    private function attribute_message( $element ) {
+    private function form_message( $element ) {
 
         if ( !isset( $element[ 'message' ] ) ) {
             return false;
