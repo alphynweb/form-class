@@ -357,7 +357,7 @@ class Form
 
         if ( isset( $element[ 'text' ] ) ) {
 
-            $this->attribute_text( $element[ 'text' ] );
+            $this->attribute_text( $element );
         }
 
         $this->update_html( '</textarea>' );
