@@ -28,12 +28,16 @@ class Form
         $attributes = array (
             "action",
             "enctype",
-            "method"
+            "method",
+            "onsubmit"
         );
 
         $this->add_attributes( $attributes );
 
         $this->update_html( ' />' );
+
+        // Form message
+        $this->form_message( $form_args );
 
         // Fields
         foreach ( $field_args as $element ) {
@@ -135,7 +139,7 @@ class Form
         $this->update_html( ' enctype="' . $element[ 'enctype' ] . '"' );
     }
 
-    private function attribute_message( $element ) {
+    private function form_message( $element ) {
 
         if ( !isset( $element[ 'message' ] ) ) {
             return false;
@@ -228,23 +232,21 @@ class Form
         // label = false
         // Label "for" will show if the labelled element has an id
         // If label isn't set then return
-        if ( !isset( $element[ 'label' ] ) ) {
-            return false;
-        }
-
         // If label value is set to false or empty then return
-        if ( isset( $element[ 'label' ] ) && ($element[ 'label' ] === false || empty( $element[ 'label' ] )) ) {
+        $label = isset( $element[ 'label' ] ) ? $element[ 'label' ] : null;
+
+        if ( !$label ) {
             return false;
         }
 
         // Html
         $this->update_html( '<label' );
 
-        $this->attribute_for( $element[ 'label' ] );
+        $this->attribute_for( $element );
 
         $this->update_html( '>' );
 
-        $this->attribute_text( $element[ 'label' ] );
+        $this->update_html( $label );
 
         $this->update_html( '</label>' );
     }
@@ -255,7 +257,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Opening HTML
@@ -274,7 +277,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -292,7 +296,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -311,7 +316,8 @@ class Form
         $attributes = array (
             "disabled",
             "value",
-            "placeholder"
+            "placeholder",
+            "required"
         );
 
         // Html
@@ -326,7 +332,8 @@ class Form
     private function file_input( $element ) {
 
         $attributes = array (
-                );
+            "required"
+        );
 
         $this->update_html( '<input type="file"' );
 
@@ -339,7 +346,8 @@ class Form
     private function textarea( $element ) {
 
         $attributes = array (
-                );
+            "required"
+        );
 
         $this->update_html( '<textarea' );
 
@@ -349,7 +357,7 @@ class Form
 
         if ( isset( $element[ 'text' ] ) ) {
 
-            $this->attribute_text( $element[ 'text' ] );
+            $this->attribute_text( $element );
         }
 
         $this->update_html( '</textarea>' );
@@ -385,7 +393,8 @@ class Form
         }
 
         $attributes = array (
-            "value"
+            "value",
+            "checked"
         );
 
         foreach ( $buttons as $button ) {
@@ -419,13 +428,6 @@ class Form
 
         $this->update_html( '>' );
 
-
-//        if ( $options ) {
-//            foreach ( $options as $key => $value ) {
-//                $this->update_html( '<option value="' . $value . '">' . $key . '</option>' );
-//            }
-//        }
-
         if ( $options ) {
             $attributes = array (
                 "value",
@@ -444,7 +446,7 @@ class Form
 
                 $this->update_html( '>' );
 
-                $this->attribute_text( $text );
+                $this->attribute_text( $option );
 
                 $this->update_html( '</option>' );
             }
@@ -471,19 +473,6 @@ class Form
     }
 
     private function link_input( $element ) {
-
-        // If no text or href set then return
-        if ( !isset( $element[ 'text' ] ) || !isset( $element[ 'href' ] ) ) {
-            return false;
-        }
-
-        // If text or href are empty then return
-        if ( empty( $element[ 'text' ] ) || empty( $element[ 'href' ] ) ) {
-            return false;
-        }
-
-        $text = $element[ 'text' ];
-        $href = $element[ 'href' ];
 
         $attributes = array (
             "href"
@@ -512,6 +501,12 @@ class Form
         $this->add_attributes( $attributes );
 
         $this->update_html( '/>' );
+    }
+
+    private function attribute_onsubmit( $element ) {
+        $onsubmit = isset( $element[ 'onsubmit' ] ) ? $element[ 'onsubmit' ] : null;
+
+        $this->update_html( ' onsubmit="' . $onsubmit . '()"' );
     }
 
     private function attribute_type( $element ) {
@@ -561,7 +556,7 @@ class Form
         }
     }
 
-    // Generate fiedl placeholder
+    // Generate field placeholder
     private function attribute_placeholder( $element ) {
         // Set field id or null if not supplied
         $placeholder = isset( $element[ 'placeholder' ] ) ? $element[ 'placeholder' ] : null;
@@ -572,12 +567,28 @@ class Form
         }
     }
 
-    // Generate field text
-    private function attribute_text( $text = null ) {
+    // Generate "required" attribute
+    private function attribute_required( $element ) {
 
-        if ( $text ) {
-            $this->update_html( $text );
+        if ( !isset( $element[ 'required' ] ) ) {
+            return false;
         }
+
+        if ( $element[ 'required' ] === true ) {
+            $this->update_html( ' required' );
+        }
+    }
+
+    // Generate field text
+    private function attribute_text( $element ) {
+
+        $text = isset( $element[ 'text' ] ) ? $element[ 'text' ] : null;
+
+        if ( !$text ) {
+            return false;
+        }
+
+        $this->update_html( $text );
     }
 
     // Generate field for
@@ -594,27 +605,33 @@ class Form
 
     private function attribute_checked( $element ) {
 
-        $checked = isset( $element[ 'checked' ] ) ? $element[ 'checked' ] : false;
+        if ( !isset( $element[ 'checked' ] ) ) {
+            return false;
+        }
 
-        if ( $checked ) {
-            $this->update_html( ' checked="checked"' );
+        if ( $element[ 'checked' ] === true ) {
+            $this->update_html( ' checked' );
         }
     }
 
     private function attribute_disabled( $element ) {
 
-        $disabled = isset( $element[ 'disabled' ] ) ? $element[ 'disabled' ] : false;
+        if ( !isset( $element[ 'disabled' ] ) ) {
+            return false;
+        }
 
-        if ( $disabled ) {
-            $this->update_html( ' disabled="disabled"' );
+        if ( $element[ 'disabled' ] === true ) {
+            $this->update_html( ' disabled' );
         }
     }
 
     private function attribute_selected( $element ) {
 
-        $selected = isset( $element[ 'selected' ] ) ? $element[ 'selected' ] : false;
+        if ( !isset( $element[ 'selected' ] ) ) {
+            return false;
+        }
 
-        if ( $selected ) {
+        if ( $element[ 'selected' ] === true ) {
             $this->update_html( ' selected' );
         }
     }
@@ -643,8 +660,8 @@ class Form
             return false;
         }
 
-        if ( $element[ 'readonly' ] == true ) {
-            $this->update_html( ' readonly="readonly"' );
+        if ( $element[ 'readonly' ] === true ) {
+            $this->update_html( ' readonly' );
         }
     }
 

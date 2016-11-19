@@ -6,6 +6,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <script>
+            function testFunction() {
+                console.log("Form submitted");
+            }
+        </script>
+
         <style>
             form input {
                 display: block;
@@ -22,7 +28,8 @@
             "name" => "formName",
             "method" => "post",
             "enctype" => "multipart/form-data",
-            "querystring" => "t=10&r=20"
+            "querystring" => "querystring=test_querystring",
+            "onsubmit" => "testFunction"
         );
         $fields = array (
             // File
@@ -36,9 +43,9 @@
                 "input" => "text",
                 "name" => "text_attribute_one",
                 "id" => "textFieldOne",
-                "value" => "Text box one value",
                 "label" => "Text box one label",
-                "placeholder" => "Text box placeholder"
+                "placeholder" => "Required field",
+                "required" => true
             ),
 ////            // Text input two
             array (
@@ -55,12 +62,19 @@
 ////            // Textarea
             array (
                 "input" => "textarea",
-                "text" => "Test text for textarea"
+                "text" => "Test text for textarea",
+                "required" => true
             ),
 ////            // Button
             array (
                 "input" => "submit",
 ////                "name" => "submit"
+            ),
+            // Link
+            array (
+                "input" => "link",
+                "text" => "A link",
+                "href" => "http://www.google.com"
             ),
             array (
                 "input" => "url",
@@ -94,7 +108,8 @@
                     ),
                     array (
                         "name" => "Radio group one",
-                        "value" => "Radio button two"
+                        "value" => "Radio button two",
+                        "checked" => true
                     ),
                     array (
                         "name" => "radio group one",
