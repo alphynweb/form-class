@@ -50,19 +50,19 @@ class Form
         $this->form_message( $form_args );
 
         // Fields
-//        foreach ( $field_args as $element ) {
-//
-//            $this->set_element( $element );
-//
-//            // Create label
-//            $this->label( $element );
-//
-//            // Establish input type
-//            $this->input_type( $element );
-//        }
-//
-//        // Form error message
-//        $this->formErrorMessage( $form_args );
+        foreach ( $field_args as $element ) {
+
+            $this->set_element( $element );
+
+            // Create label
+            $this->label( $element );
+
+            // Establish input type
+            $this->input_type( $element );
+        }
+
+        // Form error message
+        $this->formErrorMessage( $form_args );
 
         $this->update_html( '</form>' );
 
@@ -218,7 +218,7 @@ class Form
     }
 
     // Text input
-    private function text_input( $element ) {
+    private function text_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -231,14 +231,14 @@ class Form
         $this->update_html( '<input type="text"' );
 
         // Add attributes
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
     }
 
     // Email
-    private function email_input( $element ) {
+    private function email_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -251,14 +251,14 @@ class Form
         $this->update_html( '<input type="email"' );
 
         // Add attributes
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
     }
 
     // Url
-    private function url_input( $element ) {
+    private function url_input( $args ) {
         $attributes = array (
             "disabled",
             "value",
@@ -277,7 +277,7 @@ class Form
     }
 
     // Password input
-    private function password_input( $element ) {
+    private function password_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -294,7 +294,7 @@ class Form
         $this->update_html( ' />' );
     }
 
-    private function number_input( $element ) {
+    private function number_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -312,7 +312,7 @@ class Form
     }
 
     // File input
-    private function file_input( $element ) {
+    private function file_input( $args ) {
 
         $attributes = array (
             "required"
@@ -326,7 +326,7 @@ class Form
     }
 
     // Textarea
-    private function textarea( $element ) {
+    private function textarea( $args ) {
 
         $attributes = array (
             "required"
