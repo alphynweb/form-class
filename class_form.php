@@ -53,7 +53,6 @@ class Form
         foreach ( $field_args as $args ) {
 
             //$this->set_element( $element );
-
             // Create label
             $this->label( $args );
 
@@ -192,17 +191,11 @@ class Form
 
     // Label
     private function label( $args ) {
-        // Label will not show if :
-        // No label text
-        // label = false
-        // Label "for" will show if the labelled element has an id
-        // If label isn't set then return
-        // If label value is set to false or empty then return
-        $label = isset( $args[ 'label' ] ) ? $args[ 'label' ] : null;
-
-        if ( !$label ) {
+        if ( !isset( $args[ 'label' ] ) ) {
             return false;
         }
+
+        $label = $args[ 'label' ];
 
         // Html
         $this->update_html( '<label' );
@@ -383,9 +376,7 @@ class Form
             "checked"
         );
 
-        foreach ( $buttons as $button ) {
-            $this->set_element( $button );
-
+        foreach ( $buttons as $args ) {
             $this->update_html( '<input type="radio"' );
 
             $this->add_attributes( $args, $attributes );
@@ -492,6 +483,14 @@ class Form
         $this->set_html( $this->get_html() . $html );
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
     /* GETTERS AND SETTERS */
 
     // Form args

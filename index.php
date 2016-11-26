@@ -51,6 +51,7 @@
             array (
                 "input" => "email",
                 "name" => "email",
+                "id" => "email",
                 "placeholder" => "Please enter your email here"
             ),
 //////            // Password input
