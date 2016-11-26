@@ -50,15 +50,15 @@ class Form
         $this->form_message( $form_args );
 
         // Fields
-        foreach ( $field_args as $element ) {
+        foreach ( $field_args as $args ) {
 
-            $this->set_element( $element );
+            //$this->set_element( $element );
 
             // Create label
-            $this->label( $element );
+            $this->label( $args );
 
             // Establish input type
-            $this->input_type( $element );
+            $this->input_type( $args );
         }
 
         // Form error message
@@ -124,66 +124,66 @@ class Form
     }
 
     // Input type
-    private function input_type( $element ) {
-        $input = $element[ 'input' ];
+    private function input_type( $args ) {
+        $input = $args[ 'input' ];
 
         // Create field
         switch ( $input ) {
             // Text input
             case "text":
-                $this->text_input( $element );
+                $this->text_input( $args );
                 break;
             // Email input
             case "email":
-                $this->email_input( $element );
+                $this->email_input( $args );
                 break;
             case "textarea":
-                $this->textarea( $element );
+                $this->textarea( $args );
                 break;
             case "radio":
-                $this->radio_group( $element );
+                $this->radio_group( $args );
                 break;
             case "select":
-                $this->select_dropdown( $element );
+                $this->select_dropdown( $args );
                 break;
             case "button":
                 // If type of input is set
-                If ( isset( $element[ 'type' ] ) ) {
-                    switch ( $element[ 'type' ] ) {
+                If ( isset( $args[ 'type' ] ) ) {
+                    switch ( $args[ 'type' ] ) {
                         // Submit button
                         case "submit":
-                            $this->submit_button( $element );
+                            $this->submit_button( $args );
                             break;
                         // Default button
                         default:
-                            $this->button( $element );
+                            $this->button( $args );
                             break;
                     }
                     // If type of input is not set
                 } else {
-                    $this->button( $element );
+                    $this->button( $args );
                 }
                 break;
             case "submit":
-                $this->submit_button( $element );
+                $this->submit_button( $args );
                 break;
             case "password":
-                $this->password_input( $element );
+                $this->password_input( $args );
                 break;
             case "link":
-                $this->link_input( $element );
+                $this->link_input( $args );
                 break;
             case "hidden":
-                $this->hidden_input( $element );
+                $this->hidden_input( $args );
                 break;
             case "file":
-                $this->file_input( $element );
+                $this->file_input( $args );
                 break;
             case "url":
-                $this->url_input( $element );
+                $this->url_input( $args );
                 break;
             case "number":
-                $this->number_input( $element );
+                $this->number_input( $args );
                 break;
             default:
                 break;
@@ -191,14 +191,14 @@ class Form
     }
 
     // Label
-    private function label( $element ) {
+    private function label( $args ) {
         // Label will not show if :
         // No label text
         // label = false
         // Label "for" will show if the labelled element has an id
         // If label isn't set then return
         // If label value is set to false or empty then return
-        $label = isset( $element[ 'label' ] ) ? $element[ 'label' ] : null;
+        $label = isset( $args[ 'label' ] ) ? $args[ 'label' ] : null;
 
         if ( !$label ) {
             return false;
@@ -207,8 +207,8 @@ class Form
         // Html
         $this->update_html( '<label' );
 
-        //$this->attribute_for( $element );
-        $this->render_attribute( $element, 'for' );
+        //$this->attribute_for( $args );
+        $this->render_attribute( $args, 'for' );
 
         $this->update_html( '>' );
 
