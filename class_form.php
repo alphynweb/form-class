@@ -111,16 +111,15 @@ class Form
 
     // Adds field attributes according to whether field is included in array for that particular attribute
     private function add_attributes( $args, array $attributes = null ) {
+        /* Common attributes */
+
         // Name
-        //$this->attribute_name( $element );
         $this->render_attribute( $args, 'name' );
 
         // Id
-        //$this->attribute_id( $element );
         $this->render_attribute( $args, 'id' );
 
         // Class
-        //$this->attribute_class( $element );
         $this->render_attribute( $args, 'class' );
 
         if ( $attributes ) {
