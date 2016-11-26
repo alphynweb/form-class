@@ -35,14 +35,16 @@ class Form
         $this->update_html( '<form' );
 
         $attributes = array (
-            "action",
             "enctype",
             "method",
             "onsubmit"
         );
 
-        //$this->set_element( $form_args );
+        // Render form attributes
         $this->add_attributes( $form_args, $attributes );
+
+        // Render form action attribute
+        $this->render_form_action();
 
         $this->update_html( ' />' );
 
@@ -51,8 +53,6 @@ class Form
 
         // Fields
         foreach ( $field_args as $args ) {
-
-            //$this->set_element( $element );
             // Create label
             $this->label( $args );
 
@@ -66,6 +66,35 @@ class Form
         $this->update_html( '</form>' );
 
         echo $this->get_html();
+    }
+
+    // Render form action
+    private function render_form_action() {
+        $form_args = $this->get_form_args();
+        $url = null;
+
+        // If no form action supplied, default to _self.
+        if ( !isset( $form_args[ 'action' ] ) ) {
+            $url = htmlspecialchars( ( $_SERVER[ 'PHP_SELF' ] ) );
+        } else {
+            $action = $form_args[ 'action' ];
+
+            // self or empty = _self
+            if ( strtolower( $action ) == "self" || $action == "" ) {
+                $url = htmlspecialchars( ( $_SERVER[ 'PHP_SELF' ] ) );
+            } else {
+                $url = $action;
+            }
+        }
+
+        $querystring = isset( $form_args[ 'querystring' ] ) ? "?" . $form_args[ 'querystring' ] : null;
+
+        $action_attribute = array (
+            "action" => $url . $querystring
+        );
+
+        // Form action
+        $this->render_attribute( $action_attribute, 'action' );
     }
 
     // Render attribute
@@ -101,6 +130,7 @@ class Form
         }
     }
 
+    // Render form message
     private function render_form_message( $form_args ) {
 
         if ( !isset( $form_args[ 'message' ] ) ) {
@@ -112,6 +142,7 @@ class Form
         $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
+    // Render form error message
     private function render_form_error_message( $form_args ) {
 
         if ( !isset( $form_args[ 'error' ] ) ) {
@@ -288,6 +319,7 @@ class Form
         $this->update_html( ' />' );
     }
 
+    // Number input
     private function number_input( $args ) {
 
         $attributes = array (
@@ -337,6 +369,7 @@ class Form
         $this->update_html( '</textarea>' );
     }
 
+    // Inner text
     private function inner_text( $args ) {
         if ( isset( $args[ 'text' ] ) ) {
             $this->update_html( $args[ 'text' ] );
@@ -448,6 +481,7 @@ class Form
         $this->update_html( '</submit>' );
     }
 
+    // Link
     private function link_input( $args ) {
 
         $attributes = array (
@@ -466,6 +500,7 @@ class Form
         $this->update_html( '</a>' );
     }
 
+    // Hidden input
     private function hidden_input( $args ) {
         $attributes = array (
             "value"

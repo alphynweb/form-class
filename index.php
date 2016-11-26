@@ -28,7 +28,7 @@
             "name" => "formName",
             "method" => "post",
             "enctype" => "multipart/form-data",
-            "querystring" => "querystring=test_querystring",
+            "querystring" => "test_querystring",
             "onsubmit" => "testFunction"
         );
         $fields = array (
