@@ -270,7 +270,7 @@ class Form
         $this->update_html( '<input type="url"' );
 
         // Add attributes
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         // Closing HTML
         $this->update_html( ' />' );
@@ -289,7 +289,7 @@ class Form
         // Html
         $this->update_html( '<input type="password"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( ' />' );
     }
@@ -306,7 +306,7 @@ class Form
         // Html
         $this->update_html( '<input type="number"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( ' />' );
     }
@@ -320,7 +320,7 @@ class Form
 
         $this->update_html( '<input type="file"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
     }
@@ -334,7 +334,7 @@ class Form
 
         $this->update_html( '<textarea' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
 
@@ -354,7 +354,7 @@ class Form
     }
 
     // Button
-    private function button( $element ) {
+    private function button( $args ) {
 
         $attributes = array (
             "value"
@@ -363,19 +363,19 @@ class Form
         // Html
         $this->update_html( '<button type="button"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
 
-        $this->attribute_text( $element );
+        $this->attribute_text( $args );
 
         $this->update_html( '</button>' );
     }
 
     // Radio group 
-    private function radio_group( $element ) {
+    private function radio_group( $args ) {
 
-        $buttons = isset( $element[ 'buttons' ] ) ? $element[ 'buttons' ] : null;
+        $buttons = isset( $args[ 'buttons' ] ) ? $args[ 'buttons' ] : null;
 
         // If no buttons stated then return without rendering anything
         if ( !$buttons ) {
@@ -392,17 +392,17 @@ class Form
 
             $this->update_html( '<input type="radio"' );
 
-            $this->add_attributes( $attributes );
+            $this->add_attributes( $args, $attributes );
 
             $this->update_html( ' />' );
         }
     }
 
     // Select dropdown
-    private function select_dropdown( $element ) {
+    private function select_dropdown( $args ) {
 
         // Get options
-        $options = isset( $element[ 'options' ] ) ? $element[ 'options' ] : null;
+        $options = isset( $args[ 'options' ] ) ? $args[ 'options' ] : null;
 
         if ( !$options ) {
             return false;
@@ -414,7 +414,7 @@ class Form
         // Html
         $this->update_html( '<select' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
 
@@ -432,7 +432,7 @@ class Form
 
                 $this->update_html( '<option' );
 
-                $this->add_attributes( $attributes );
+                $this->add_attributes( $args, $attributes );
 
                 $this->update_html( '>' );
 
@@ -446,7 +446,7 @@ class Form
     }
 
     // Submit button
-    private function submit_button( $element ) {
+    private function submit_button( $args ) {
 
         $attributes = array (
             "value"
@@ -455,14 +455,14 @@ class Form
         // Html
         $this->update_html( '<input type="submit"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
 
         $this->update_html( '</submit>' );
     }
 
-    private function link_input( $element ) {
+    private function link_input( $args ) {
 
         $attributes = array (
             "href"
@@ -471,7 +471,7 @@ class Form
         // Html
         $this->update_html( '<a' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '>' );
 
@@ -480,7 +480,7 @@ class Form
         $this->update_html( '</a>' );
     }
 
-    private function hidden_input( $element ) {
+    private function hidden_input( $args ) {
         $attributes = array (
             "value"
         );
@@ -488,7 +488,7 @@ class Form
         // Html
         $this->update_html( '<input type="hidden"' );
 
-        $this->add_attributes( $attributes );
+        $this->add_attributes( $args, $attributes );
 
         $this->update_html( '/>' );
     }
