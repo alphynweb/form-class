@@ -345,8 +345,6 @@ class Form
 
     private function inner_text( $args ) {
         if ( isset( $args[ 'text' ] ) ) {
-            //$this->attribute_text( $element );
-            //$this->render_attribute($element, $attribute)
             $this->update_html( $args[ 'text' ] );
         }
     }

@@ -127,7 +127,7 @@
         );
 
         $new_form = new Form( $form, $fields );
-        $new_form->render_form();
+        //$new_form->render_form();
         ?>
     </body>
 </html>
