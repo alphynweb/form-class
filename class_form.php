@@ -220,6 +220,9 @@ class Form
             case "url":
                 $this->url_input( $element );
                 break;
+            case "number":
+                $this->number_input( $element );
+                break;
             default:
                 break;
         }
@@ -322,6 +325,23 @@ class Form
 
         // Html
         $this->update_html( '<input type="password"' );
+
+        $this->add_attributes( $attributes );
+
+        $this->update_html( ' />' );
+    }
+
+    private function number_input( $element ) {
+
+        $attributes = array (
+            "disabled",
+            "value",
+            "min",
+            "max"
+        );
+
+        // Html
+        $this->update_html( '<input type="number"' );
 
         $this->add_attributes( $attributes );
 
@@ -552,6 +572,26 @@ class Form
 
         if ( $value ) {
             $html = ' value="' . $value . '"';
+            $this->update_html( $html );
+        }
+    }
+
+    private function attribute_min( $element ) {
+
+        $min = isset( $element[ 'min' ] ) ? $element[ 'min' ] : null;
+
+        if ( $min ) {
+            $html = ' min="' . $min . '"';
+            $this->update_html( $html );
+        }
+    }
+
+    private function attribute_max( $element ) {
+
+        $max = isset( $element[ 'max' ] ) ? $element[ 'max' ] : null;
+
+        if ( $max ) {
+            $html = ' max="' . $max . '"';
             $this->update_html( $html );
         }
     }

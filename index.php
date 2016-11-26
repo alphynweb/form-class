@@ -116,6 +116,13 @@
                         "value" => "Radio button three"
                     )
                 )
+            ),
+            array (
+                "input" => "number",
+                "name" => "number",
+                "min" => 1,
+                "max" => 10,
+                "value" => "89"
             )
         );
 
