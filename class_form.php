@@ -57,6 +57,17 @@ class Form
         $this->update_html( '</form>' );
     }
 
+    private function render_attribute( $element, $attribute ) {
+        // If attribute doesn't exist then return fale
+        if ( !isset( $element[ $attribute ] ) ) {
+            return false;
+        }
+
+        // Render attribute
+        $html = ' ' . $attribute . '="' . $element[ $attribute ] . '"';
+        $this->update_html( $html );
+    }
+
     // Adds field attributes according to whether field is included in array for that particular attribute
     private function add_attributes( array $attributes = null ) {
         $element = $this->get_element();
@@ -71,8 +82,7 @@ class Form
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
-                $func_name = "attribute_" . $attribute;
-                $this->$func_name( $element );
+                $this->render_attribute($element, $attribute);
             }
         }
     }

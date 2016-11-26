@@ -91,7 +91,7 @@
                     array (
                         "text" => "Option two text",
                         "value" => "2",
-                        "selected" => true
+                        "selected" => "selected"
                     ),
                     array (
                         "text" => "Option three text",
@@ -109,7 +109,7 @@
                     array (
                         "name" => "Radio group one",
                         "value" => "Radio button two",
-                        "checked" => true
+                        "checked" => "checked"
                     ),
                     array (
                         "name" => "radio group one",
