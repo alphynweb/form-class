@@ -338,18 +338,16 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->inner_text();
+        $this->inner_text( $args );
 
         $this->update_html( '</textarea>' );
     }
 
-    private function inner_text() {
-        $element = $this->get_element();
-
-        if ( isset( $element[ 'text' ] ) ) {
+    private function inner_text( $args ) {
+        if ( isset( $args[ 'text' ] ) ) {
             //$this->attribute_text( $element );
             //$this->render_attribute($element, $attribute)
-            $this->update_html( $element[ 'text' ] );
+            $this->update_html( $args[ 'text' ] );
         }
     }
 
@@ -424,9 +422,7 @@ class Form
                 "selected"
             );
 
-            foreach ( $options as $option ) {
-
-                $this->set_element( $option );
+            foreach ( $options as $args ) {
 
                 $text = isset( $option[ 'text' ] ) ? $option[ 'text' ] : null;
 
@@ -436,7 +432,7 @@ class Form
 
                 $this->update_html( '>' );
 
-                $this->inner_text();
+                $this->inner_text( $args );
 
                 $this->update_html( '</option>' );
             }
@@ -475,7 +471,7 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->inner_text();
+        $this->inner_text( $args );
 
         $this->update_html( '</a>' );
     }
