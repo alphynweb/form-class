@@ -60,6 +60,9 @@
                 "name" => "password",
                 "placeholder" => "Enter your password here"
             ),
+            array (
+                "html" => "<p>Some test html for the html element</p>"
+            ),
 ////            // Textarea
             array (
                 "input" => "textarea",

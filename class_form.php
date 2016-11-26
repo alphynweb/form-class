@@ -155,68 +155,74 @@ class Form
 
     // Input type
     private function input_type( $args ) {
-        $input = $args[ 'input' ];
+        if ( isset( $args[ 'input' ] ) ) {
+            $input = $args[ 'input' ];
 
-        // Create field
-        switch ( $input ) {
-            // Text input
-            case "text":
-                $this->text_input( $args );
-                break;
-            // Email input
-            case "email":
-                $this->email_input( $args );
-                break;
-            case "textarea":
-                $this->textarea( $args );
-                break;
-            case "radio":
-                $this->radio_group( $args );
-                break;
-            case "select":
-                $this->select_dropdown( $args );
-                break;
-            case "button":
-                // If type of input is set
-                If ( isset( $args[ 'type' ] ) ) {
-                    switch ( $args[ 'type' ] ) {
-                        // Submit button
-                        case "submit":
-                            $this->submit_button( $args );
-                            break;
-                        // Default button
-                        default:
-                            $this->button( $args );
-                            break;
+            // Create field
+            switch ( $input ) {
+                // Text input
+                case "text":
+                    $this->text_input( $args );
+                    break;
+                // Email input
+                case "email":
+                    $this->email_input( $args );
+                    break;
+                case "textarea":
+                    $this->textarea( $args );
+                    break;
+                case "radio":
+                    $this->radio_group( $args );
+                    break;
+                case "select":
+                    $this->select_dropdown( $args );
+                    break;
+                case "button":
+                    // If type of input is set
+                    If ( isset( $args[ 'type' ] ) ) {
+                        switch ( $args[ 'type' ] ) {
+                            // Submit button
+                            case "submit":
+                                $this->submit_button( $args );
+                                break;
+                            // Default button
+                            default:
+                                $this->button( $args );
+                                break;
+                        }
+                        // If type of input is not set
+                    } else {
+                        $this->button( $args );
                     }
-                    // If type of input is not set
-                } else {
-                    $this->button( $args );
-                }
-                break;
-            case "submit":
-                $this->submit_button( $args );
-                break;
-            case "password":
-                $this->password_input( $args );
-                break;
-            case "link":
-                $this->link_input( $args );
-                break;
-            case "hidden":
-                $this->hidden_input( $args );
-                break;
-            case "file":
-                $this->file_input( $args );
-                break;
-            case "url":
-                $this->url_input( $args );
-                break;
-            case "number":
-                $this->number_input( $args );
-                break;
-            default:
-                break;
+                    break;
+                case "submit":
+                    $this->submit_button( $args );
+                    break;
+                case "password":
+                    $this->password_input( $args );
+                    break;
+                case "link":
+                    $this->link_input( $args );
+                    break;
+                case "hidden":
+                    $this->hidden_input( $args );
+                    break;
+                case "file":
+                    $this->file_input( $args );
+                    break;
+                case "url":
+                    $this->url_input( $args );
+                    break;
+                case "number":
+                    $this->number_input( $args );
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            if ( isset( $args[ 'html' ] ) ) {
+                $this->update_html( $args[ 'html' ] );
+            }
         }
     }
 
