@@ -101,24 +101,24 @@ class Form
         }
     }
 
-    private function form_message( $element ) {
+    private function form_message( $form_args ) {
 
-        if ( !isset( $element[ 'message' ] ) ) {
+        if ( !isset( $form_args[ 'message' ] ) ) {
             return false;
         }
 
-        $form_message = $element[ 'message' ];
+        $form_message = $form_args[ 'message' ];
 
         $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
-    private function formErrorMessage( $element ) {
+    private function formErrorMessage( $form_args ) {
 
-        if ( !isset( $element[ 'error' ] ) ) {
+        if ( !isset( $form_args[ 'error' ] ) ) {
             return false;
         }
 
-        $error_message = $element[ 'error' ];
+        $error_message = $form_args[ 'error' ];
 
         $this->update_html( '<div class="error-message">' . $error_message . '</div>' );
     }
