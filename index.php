@@ -45,7 +45,7 @@
                 "id" => "textFieldOne",
                 "label" => "Text box one label",
                 "placeholder" => "Required field",
-                "required" => true
+                "required" => "required"
             ),
 ////            // Text input two
             array (
@@ -63,7 +63,7 @@
             array (
                 "input" => "textarea",
                 "text" => "Test text for textarea",
-                "required" => true
+                "required" => "required"
             ),
 ////            // Button
             array (

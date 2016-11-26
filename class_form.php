@@ -41,7 +41,8 @@ class Form
             "onsubmit"
         );
 
-        $this->add_attributes( $attributes );
+        //$this->set_element( $form_args );
+        $this->add_attributes( $form_args, $attributes );
 
         $this->update_html( ' />' );
 
@@ -49,19 +50,19 @@ class Form
         $this->form_message( $form_args );
 
         // Fields
-        foreach ( $field_args as $element ) {
-
-            $this->set_element( $element );
-
-            // Create label
-            $this->label( $element );
-
-            // Establish input type
-            $this->input_type( $element );
-        }
-
-        // Form error message
-        $this->formErrorMessage( $form_args );
+//        foreach ( $field_args as $element ) {
+//
+//            $this->set_element( $element );
+//
+//            // Create label
+//            $this->label( $element );
+//
+//            // Establish input type
+//            $this->input_type( $element );
+//        }
+//
+//        // Form error message
+//        $this->formErrorMessage( $form_args );
 
         $this->update_html( '</form>' );
 
@@ -80,23 +81,22 @@ class Form
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
-    private function add_attributes( array $attributes = null ) {
-        $element = $this->get_element();
+    private function add_attributes( $args, array $attributes = null ) {
         // Name
         //$this->attribute_name( $element );
-        $this->render_attribute( $element, 'name' );
+        $this->render_attribute( $args, 'name' );
 
         // Id
         //$this->attribute_id( $element );
-        $this->render_attribute( $element, 'id' );
+        $this->render_attribute( $args, 'id' );
 
         // Class
         //$this->attribute_class( $element );
-        $this->render_attribute( $element, 'class' );
+        $this->render_attribute( $args, 'class' );
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
-                $this->render_attribute( $element, $attribute );
+                $this->render_attribute( $args, $attribute );
             }
         }
     }
