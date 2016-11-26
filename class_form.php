@@ -12,16 +12,25 @@ class Form
 
     // Properties
     // Object with info about form fields
-    private $form;
-    private $fields;
+    private $form_args;
+    private $field_args;
     private $element;
     private $html;
 
     // Constructor
     public function __construct( $form_args, $field_args ) {
 
-        // Form
-        $this->set_element( $form_args );
+        $this->set_form_args( $form_args );
+        $this->set_field_args( $field_args );
+
+        $this->render_form();
+    }
+
+    // Render form
+    public function render_form() {
+
+        $form_args = $this->get_form_args();
+        $field_args = $this->get_field_args();
 
         $this->update_html( '<form' );
 
@@ -55,6 +64,8 @@ class Form
         $this->formErrorMessage( $form_args );
 
         $this->update_html( '</form>' );
+
+        echo $this->get_html();
     }
 
     private function render_attribute( $element, $attribute ) {
@@ -72,24 +83,22 @@ class Form
     private function add_attributes( array $attributes = null ) {
         $element = $this->get_element();
         // Name
-        $this->attribute_name( $element );
+        //$this->attribute_name( $element );
+        $this->render_attribute( $element, 'name' );
 
         // Id
-        $this->attribute_id( $element );
+        //$this->attribute_id( $element );
+        $this->render_attribute( $element, 'id' );
 
         // Class
-        $this->attribute_class( $element );
+        //$this->attribute_class( $element );
+        $this->render_attribute( $element, 'class' );
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
-                $this->render_attribute($element, $attribute);
+                $this->render_attribute( $element, $attribute );
             }
         }
-    }
-
-    // Render form
-    public function render_form() {
-        echo $this->get_html();
     }
 
     private function form_message( $element ) {
@@ -198,7 +207,8 @@ class Form
         // Html
         $this->update_html( '<label' );
 
-        $this->attribute_for( $element );
+        //$this->attribute_for( $element );
+        $this->render_attribute( $element, 'for' );
 
         $this->update_html( '>' );
 
@@ -328,12 +338,19 @@ class Form
 
         $this->update_html( '>' );
 
-        if ( isset( $element[ 'text' ] ) ) {
-
-            $this->attribute_text( $element );
-        }
+        $this->inner_text();
 
         $this->update_html( '</textarea>' );
+    }
+
+    private function inner_text() {
+        $element = $this->get_element();
+
+        if ( isset( $element[ 'text' ] ) ) {
+            //$this->attribute_text( $element );
+            //$this->render_attribute($element, $attribute)
+            $this->update_html( $element[ 'text' ] );
+        }
     }
 
     // Button
@@ -419,7 +436,7 @@ class Form
 
                 $this->update_html( '>' );
 
-                $this->attribute_text( $option );
+                $this->inner_text();
 
                 $this->update_html( '</option>' );
             }
@@ -458,7 +475,7 @@ class Form
 
         $this->update_html( '>' );
 
-        $this->attribute_text( $element );
+        $this->inner_text();
 
         $this->update_html( '</a>' );
     }
@@ -481,23 +498,27 @@ class Form
         $this->set_html( $this->get_html() . $html );
     }
 
-    // GETTERS AND SETTERS
-    private function get_form() {
+    /* GETTERS AND SETTERS */
+
+    // Form args
+    private function get_form_args() {
         return $this->form;
     }
 
-    private function set_form( $form_object ) {
-        $this->form = $form_object;
+    private function set_form_args( $form_args ) {
+        $this->form = $form_args;
     }
 
-    private function get_elements() {
-        return $this->fields;
+    // Field args
+    private function get_field_args() {
+        return $this->field_args;
     }
 
-    private function set_elements( $fields_object ) {
-        $this->elements = $fields_object;
+    private function set_field_args( $field_args ) {
+        $this->field_args = $field_args;
     }
 
+    // Current element
     private function get_element() {
         return $this->element;
     }
@@ -506,6 +527,7 @@ class Form
         $this->element = $element;
     }
 
+    // Html
     public function get_html() {
         return $this->html;
     }
