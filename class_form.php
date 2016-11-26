@@ -98,14 +98,14 @@ class Form
     }
 
     // Render attribute
-    private function render_attribute( $element, $attribute ) {
+    private function render_attribute( $args, $attribute ) {
         // If attribute doesn't exist then return fale
-        if ( !isset( $element[ $attribute ] ) ) {
+        if ( !isset( $args[ $attribute ] ) ) {
             return false;
         }
 
         // Render attribute
-        $html = ' ' . $attribute . '="' . $element[ $attribute ] . '"';
+        $html = ' ' . $attribute . '="' . $args[ $attribute ] . '"';
         $this->update_html( $html );
     }
 
