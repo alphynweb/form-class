@@ -82,8 +82,7 @@ class Form
 
         if ( $attributes ) {
             foreach ( $attributes as $attribute ) {
-                $func_name = "attribute_" . $attribute;
-                $this->$func_name( $element );
+                $this->render_attribute($element, $attribute);
             }
         }
     }
