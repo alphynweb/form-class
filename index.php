@@ -28,7 +28,7 @@
             "name" => "formName",
             "method" => "post",
             "enctype" => "multipart/form-data",
-            "querystring" => "querystring=test_querystring",
+            "querystring" => "test_querystring",
             "onsubmit" => "testFunction"
         );
         $fields = array (
@@ -45,12 +45,13 @@
                 "id" => "textFieldOne",
                 "label" => "Text box one label",
                 "placeholder" => "Required field",
-                "required" => true
+                "required" => "required"
             ),
 ////            // Text input two
             array (
                 "input" => "email",
                 "name" => "email",
+                "id" => "email",
                 "placeholder" => "Please enter your email here"
             ),
 //////            // Password input
@@ -59,11 +60,14 @@
                 "name" => "password",
                 "placeholder" => "Enter your password here"
             ),
+            array (
+                "html" => "<p>Some test html for the html element</p>"
+            ),
 ////            // Textarea
             array (
                 "input" => "textarea",
                 "text" => "Test text for textarea",
-                "required" => true
+                "required" => "required"
             ),
 ////            // Button
             array (
@@ -91,7 +95,7 @@
                     array (
                         "text" => "Option two text",
                         "value" => "2",
-                        "selected" => true
+                        "selected" => "selected"
                     ),
                     array (
                         "text" => "Option three text",
@@ -109,18 +113,25 @@
                     array (
                         "name" => "Radio group one",
                         "value" => "Radio button two",
-                        "checked" => true
+                        "checked" => "checked"
                     ),
                     array (
                         "name" => "radio group one",
                         "value" => "Radio button three"
                     )
                 )
+            ),
+            array (
+                "input" => "number",
+                "name" => "number",
+                "min" => 1,
+                "max" => 10,
+                "value" => "89"
             )
         );
 
         $new_form = new Form( $form, $fields );
-        $new_form->render_form();
+        //$new_form->render_form();
         ?>
     </body>
 </html>
