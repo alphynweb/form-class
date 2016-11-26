@@ -47,7 +47,7 @@ class Form
         $this->update_html( ' />' );
 
         // Form message
-        $this->form_message( $form_args );
+        $this->render_form_message( $form_args );
 
         // Fields
         foreach ( $field_args as $args ) {
@@ -61,13 +61,14 @@ class Form
         }
 
         // Form error message
-        $this->formErrorMessage( $form_args );
+        $this->render_form_error_message( $form_args );
 
         $this->update_html( '</form>' );
 
         echo $this->get_html();
     }
 
+    // Render attribute
     private function render_attribute( $element, $attribute ) {
         // If attribute doesn't exist then return fale
         if ( !isset( $element[ $attribute ] ) ) {
@@ -100,7 +101,7 @@ class Form
         }
     }
 
-    private function form_message( $form_args ) {
+    private function render_form_message( $form_args ) {
 
         if ( !isset( $form_args[ 'message' ] ) ) {
             return false;
@@ -111,7 +112,7 @@ class Form
         $this->update_html( '<p>' . $form_message . '</p>' );
     }
 
-    private function formErrorMessage( $form_args ) {
+    private function render_form_error_message( $form_args ) {
 
         if ( !isset( $form_args[ 'error' ] ) ) {
             return false;
@@ -483,14 +484,6 @@ class Form
         $this->set_html( $this->get_html() . $html );
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
     /* GETTERS AND SETTERS */
 
     // Form args
