@@ -12,10 +12,10 @@ class Form
 
     // Properties
     // Object with info about form fields
-    private $form_args;
-    private $field_args;
-    private $element;
-    private $html;
+    protected $form_args;
+    protected $field_args;
+    protected $element;
+    protected $html;
 
     // Constructor
     public function __construct( $form_args, $field_args ) {
@@ -69,7 +69,7 @@ class Form
     }
 
     // Render form action
-    private function render_form_action() {
+    protected function render_form_action() {
         $form_args = $this->get_form_args();
         $url = null;
 
@@ -98,7 +98,7 @@ class Form
     }
 
     // Render attribute
-    private function render_attribute( $args, $attribute ) {
+    protected function render_attribute( $args, $attribute ) {
         // If attribute doesn't exist then return fale
         if ( !isset( $args[ $attribute ] ) ) {
             return false;
@@ -110,7 +110,7 @@ class Form
     }
 
     // Adds field attributes according to whether field is included in array for that particular attribute
-    private function add_attributes( $args, array $attributes = null ) {
+    protected function add_attributes( $args, array $attributes = null ) {
         /* Common attributes */
 
         // Name
@@ -130,7 +130,7 @@ class Form
     }
 
     // Render form message
-    private function render_form_message( $form_args ) {
+    protected function render_form_message( $form_args ) {
 
         if ( !isset( $form_args[ 'message' ] ) ) {
             return false;
@@ -142,7 +142,7 @@ class Form
     }
 
     // Render form error message
-    private function render_form_error_message( $form_args ) {
+    protected function render_form_error_message( $form_args ) {
 
         if ( !isset( $form_args[ 'error' ] ) ) {
             return false;
@@ -154,7 +154,7 @@ class Form
     }
 
     // Input type
-    private function input_type( $args ) {
+    protected function input_type( $args ) {
         if ( isset( $args[ 'input' ] ) ) {
             $input = $args[ 'input' ];
 
@@ -227,7 +227,7 @@ class Form
     }
 
     // Label
-    private function label( $args ) {
+    protected function label( $args ) {
         if ( !isset( $args[ 'label' ] ) ) {
             return false;
         }
@@ -248,7 +248,7 @@ class Form
     }
 
     // Text input
-    private function text_input( $args ) {
+    protected function text_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -268,7 +268,7 @@ class Form
     }
 
     // Email
-    private function email_input( $args ) {
+    protected function email_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -288,7 +288,7 @@ class Form
     }
 
     // Url
-    private function url_input( $args ) {
+    protected function url_input( $args ) {
         $attributes = array (
             "disabled",
             "value",
@@ -307,7 +307,7 @@ class Form
     }
 
     // Password input
-    private function password_input( $args ) {
+    protected function password_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -325,7 +325,7 @@ class Form
     }
 
     // Number input
-    private function number_input( $args ) {
+    protected function number_input( $args ) {
 
         $attributes = array (
             "disabled",
@@ -343,7 +343,7 @@ class Form
     }
 
     // File input
-    private function file_input( $args ) {
+    protected function file_input( $args ) {
 
         $attributes = array (
             "required"
@@ -357,7 +357,7 @@ class Form
     }
 
     // Textarea
-    private function textarea( $args ) {
+    protected function textarea( $args ) {
 
         $attributes = array (
             "required"
@@ -375,14 +375,14 @@ class Form
     }
 
     // Inner text
-    private function inner_text( $args ) {
+    protected function inner_text( $args ) {
         if ( isset( $args[ 'text' ] ) ) {
             $this->update_html( $args[ 'text' ] );
         }
     }
 
     // Button
-    private function button( $args ) {
+    protected function button( $args ) {
 
         $attributes = array (
             "value"
@@ -401,7 +401,7 @@ class Form
     }
 
     // Radio group 
-    private function radio_group( $args ) {
+    protected function radio_group( $args ) {
 
         $buttons = isset( $args[ 'buttons' ] ) ? $args[ 'buttons' ] : null;
 
@@ -425,7 +425,7 @@ class Form
     }
 
     // Select dropdown
-    private function select_dropdown( $args ) {
+    protected function select_dropdown( $args ) {
 
         // Get options
         $options = isset( $args[ 'options' ] ) ? $args[ 'options' ] : null;
@@ -470,7 +470,7 @@ class Form
     }
 
     // Submit button
-    private function submit_button( $args ) {
+    protected function submit_button( $args ) {
 
         $attributes = array (
             "value"
@@ -487,7 +487,7 @@ class Form
     }
 
     // Link
-    private function link_input( $args ) {
+    protected function link_input( $args ) {
 
         $attributes = array (
             "href"
@@ -506,7 +506,7 @@ class Form
     }
 
     // Hidden input
-    private function hidden_input( $args ) {
+    protected function hidden_input( $args ) {
         $attributes = array (
             "value"
         );
@@ -520,36 +520,36 @@ class Form
     }
 
     // Update form html
-    private function update_html( $html ) {
+    protected function update_html( $html ) {
         $this->set_html( $this->get_html() . $html );
     }
 
     /* GETTERS AND SETTERS */
 
     // Form args
-    private function get_form_args() {
-        return $this->form;
+    protected function get_form_args() {
+        return $this->form_args;
     }
 
-    private function set_form_args( $form_args ) {
+    protected function set_form_args( $form_args ) {
         $this->form = $form_args;
     }
 
     // Field args
-    private function get_field_args() {
+    protected function get_field_args() {
         return $this->field_args;
     }
 
-    private function set_field_args( $field_args ) {
+    protected function set_field_args( $field_args ) {
         $this->field_args = $field_args;
     }
 
     // Current element
-    private function get_element() {
+    protected function get_element() {
         return $this->element;
     }
 
-    private function set_element( $element ) {
+    protected function set_element( $element ) {
         $this->element = $element;
     }
 
@@ -558,7 +558,7 @@ class Form
         return $this->html;
     }
 
-    private function set_html( $html ) {
+    protected function set_html( $html ) {
         $this->html = $html;
     }
 

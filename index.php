@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php require_once 'class_form.php'; ?>
+        <?php require_once 'extended_class_form.php'; ?>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,7 +131,7 @@
             )
         );
 
-        $new_form = new Form( $form, $fields );
+        $new_form = new ExtendedForm( $form, $fields );
         //$new_form->render_form();
         ?>
     </body>
