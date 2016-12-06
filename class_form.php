@@ -22,8 +22,7 @@ class Form
 
         $this->set_form_args( $form_args );
         $this->set_field_args( $field_args );
-
-        $this->render_form();
+        
     }
 
     // Render form

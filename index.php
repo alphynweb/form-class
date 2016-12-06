@@ -132,7 +132,7 @@
         );
 
         $new_form = new ExtendedForm( $form, $fields );
-        //$new_form->render_form();
+        $new_form->render_form();
         ?>
     </body>
 </html>
