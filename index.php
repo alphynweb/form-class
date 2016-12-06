@@ -23,7 +23,7 @@
     <body>
         <?php
         // Tester - three fields
-        $form = array (
+        $form_args = array (
             "message" => "This is a sample message for the form",
             "id" => "formId",
             "name" => "formName",
@@ -32,7 +32,7 @@
             "querystring" => "test_querystring",
             "onsubmit" => "testFunction"
         );
-        $fields = array (
+        $field_args = array (
             // File
             array (
                 "input" => "file",
@@ -131,7 +131,7 @@
             )
         );
 
-        $new_form = new ExtendedForm( $form, $fields );
+        $new_form = new Form( $form_args, $field_args );
         $new_form->render_form();
         ?>
     </body>

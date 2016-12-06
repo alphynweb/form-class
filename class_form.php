@@ -531,7 +531,7 @@ class Form
     }
 
     protected function set_form_args( $form_args ) {
-        $this->form = $form_args;
+        $this->form_args = $form_args;
     }
 
     // Field args
