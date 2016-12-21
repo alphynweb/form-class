@@ -51,11 +51,11 @@ class Form
 
         // Fields
         foreach ( $field_args as $args ) {
-            // Create label
-            $this->label( $args );
-
             // Establish input type
             $this->input_type( $args );
+            
+            // Create label
+            $this->label( $args );
         }
 
         // Form error message
