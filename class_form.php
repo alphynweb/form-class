@@ -22,7 +22,6 @@ class Form
 
         $this->set_form_args( $form_args );
         $this->set_field_args( $field_args );
-        
     }
 
     // Render form
@@ -237,7 +236,17 @@ class Form
         $this->update_html( '<label' );
 
         //$this->attribute_for( $args );
-        $this->render_attribute( $args, 'for' );
+        //$this->add_attributes( $args, $attributes );
+
+        $for = null;
+        
+        if ( isset( $args[ 'id' ] ) ) {
+            $for = $args[ 'id' ];
+        }
+        
+        if ($for) {
+            $this->update_html(' for="' . $for . '"');
+        }
 
         $this->update_html( '>' );
 
